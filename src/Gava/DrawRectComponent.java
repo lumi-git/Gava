@@ -1,3 +1,5 @@
+package Gava;
+
 import java.awt.*;
 
 public class DrawRectComponent extends DrawableComponent{

@@ -1,5 +1,7 @@
-import java.awt.*;
+package Gava;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public abstract class GameObject {
     private boolean isDestroyed = false;
@@ -17,7 +19,7 @@ public abstract class GameObject {
     }
 
     public GameObject(){
-        this.name = "GameObject";
+        this.name = "Gava.GameObject";
     }
 
     public void Mstart() {
@@ -34,16 +36,15 @@ public abstract class GameObject {
         drawableComponents.removeAll(drawableComponentsTOREMOVE);
         componentsTOREMOVE.clear();
         drawableComponentsTOREMOVE.clear();
-        if(isDestroyed){
-            Game.getInstance().getCurrentScene().removeGameObject(this);
-        }
-        else{
-            this.update(dt);
-            for(Component c : components){
-                if (isDestroyed) return;
-                c.Mupdate(dt);
 
-            }
+            this.update(dt);
+
+        Iterator<Component> it = components.iterator();
+        while (it.hasNext()) {
+            Component c = it.next();
+            if (c.isDestroyed())
+                it.remove();
+            else c.Mupdate(dt);
         }
 
     }
@@ -89,10 +90,6 @@ public abstract class GameObject {
         Game.getInstance().getCurrentScene().addDrawableComponent(dc);
     }
 
-    public void removeDrawableComponent(DrawableComponent dc){
-        drawableComponentsTOREMOVE.add(dc);
-        Game.getInstance().getCurrentScene().removeDrawableComponent(dc);
-    }
 
     public ArrayList<DrawableComponent> getDrawableComponents(){
         return this.drawableComponents;

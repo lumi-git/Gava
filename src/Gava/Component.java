@@ -1,4 +1,4 @@
-import java.awt.*;
+package Gava;
 
 public abstract class Component {
 

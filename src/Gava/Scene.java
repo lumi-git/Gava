@@ -1,21 +1,16 @@
+package Gava;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public abstract class Scene {
     private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-    private ArrayList<GameObject> gameObjectsTOREMOVE = new ArrayList<GameObject>();
 
     private ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
-    private ArrayList<DrawableComponent> drawableComponentsTOREMOVE = new ArrayList<DrawableComponent>();
 
     public void addDrawableComponent(DrawableComponent dc){
         drawableComponents.add(dc);
-    }
-
-    public void removeDrawableComponent(DrawableComponent dc){
-        drawableComponentsTOREMOVE.add(dc);
-
     }
 
     public ArrayList<DrawableComponent> getDrawableComponents(){
@@ -27,11 +22,6 @@ public abstract class Scene {
         go.Mstart();
     }
 
-    public void removeGameObject(GameObject go){
-        gameObjectsTOREMOVE.add(go);
-        drawableComponentsTOREMOVE.addAll(go.getDrawableComponents());
-
-    }
 
     public void Mupdate(double dt){
 

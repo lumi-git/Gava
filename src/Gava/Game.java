@@ -1,11 +1,9 @@
+package Gava;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
-
 public class Game extends JPanel implements Runnable{
     Thread gameThread;
     double CurrentFps = 0;
@@ -29,18 +27,15 @@ public class Game extends JPanel implements Runnable{
     public void Init(){
         frame.setLayout( new BorderLayout());
         frame.setSize(800, 600);
-        frame.setTitle("Gava Game window");
+        frame.setTitle("Gava Gava.Game window");
         frame.addMouseListener(new GavaMouseListener());
-
+        frame.addKeyListener(new GavaKeyListener());
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
-        Scene scene = new defaultScene();
-        scenes.add(scene);
-        setCurrentScene(0);
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -63,6 +58,10 @@ public class Game extends JPanel implements Runnable{
         return go;
     }
 
+    public void addScene(Scene scene){
+        scenes.add(scene);
+    }
+
     public void start() {
         Init();
         gameThread = new Thread(this);
@@ -77,6 +76,14 @@ public class Game extends JPanel implements Runnable{
     public void update(double dt){
 
         currentScene.Mupdate(dt);
+    }
+
+    public GavaMouseListener getMouseListener(){
+        return (GavaMouseListener)frame.getMouseListeners()[0];
+    }
+
+    public GavaKeyListener getKeyListener(){
+        return (GavaKeyListener)frame.getKeyListeners()[0];
     }
 
     public void run() {
