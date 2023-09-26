@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class GavaMouseListener implements MouseListener {
 
-    private Boolean[] mouseButtons = new Boolean[4];
+    private final Boolean[] mouseButtons = new Boolean[4];
 
     public GavaMouseListener(){
         for (int i = 0; i < mouseButtons.length; i++) {

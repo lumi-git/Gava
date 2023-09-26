@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public abstract class Scene {
-    private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+    private final ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
-    private ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
+    private final ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
 
     public void addDrawableComponent(DrawableComponent dc){
         drawableComponents.add(dc);

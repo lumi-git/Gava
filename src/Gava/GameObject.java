@@ -5,14 +5,14 @@ import java.util.Iterator;
 
 public abstract class GameObject {
     private boolean isDestroyed = false;
-    private Transform transform = new Transform();
-    private ArrayList<Component> components = new ArrayList<Component>();
-    private ArrayList<Component> componentsTOREMOVE = new ArrayList<Component>();
+    private final Transform transform = new Transform();
+    private final ArrayList<Component> components = new ArrayList<Component>();
+    private final ArrayList<Component> componentsTOREMOVE = new ArrayList<Component>();
 
-    private ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
-    private ArrayList<DrawableComponent> drawableComponentsTOREMOVE = new ArrayList<DrawableComponent>();
+    private final ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
+    private final ArrayList<DrawableComponent> drawableComponentsTOREMOVE = new ArrayList<DrawableComponent>();
 
-    private String name;
+    private final String name;
 
     public GameObject(String name){
         this.name = name;

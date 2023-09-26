@@ -10,13 +10,13 @@ public class Game extends JPanel implements Runnable{
     JFrame frame = new JFrame("GameWindow");
     public Canvas canvas = new Canvas();
     static private Game instance = null;
-    private ArrayList<Scene> scenes = new ArrayList<Scene>();
+    private final ArrayList<Scene> scenes = new ArrayList<Scene>();
 
 
     private Scene currentScene;
-    private int FPS = 60;
+    private final int FPS = 60;
 
-    private Game() {
+    public Game() {
         super();
     }
 
@@ -24,13 +24,13 @@ public class Game extends JPanel implements Runnable{
         return currentScene;
     }
 
-    public void Init(){
+    public void MInit(){
+
         frame.setLayout( new BorderLayout());
         frame.setSize(800, 600);
-        frame.setTitle("Gava Gava.Game window");
+        frame.setTitle("Gava default window");
         frame.addMouseListener(new GavaMouseListener());
         frame.addKeyListener(new GavaKeyListener());
-
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -38,17 +38,33 @@ public class Game extends JPanel implements Runnable{
         });
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
+        this.init();
         frame.setVisible(true);
+
+    }
+
+    @Override
+    public Dimension getSize() {
+        return frame.getSize();
+    }
+
+    public void init(){
 
 
     }
 
+    public void setTitle(String title){
+        frame.setTitle(title);
+    }
+
+    public void setIcon(String path){
+        frame.setIconImage(new ImageIcon(path).getImage());
+    }
 
     static public Game getInstance() {
         if (instance == null) {
             instance = new Game();
             instance.setVisible(true);
-
         }
         return instance;
     }
@@ -58,12 +74,20 @@ public class Game extends JPanel implements Runnable{
         return go;
     }
 
+    public void getFps(){
+        System.out.println(CurrentFps);
+    }
+
+    public JFrame getFrame(){
+        return frame;
+    }
+
     public void addScene(Scene scene){
         scenes.add(scene);
     }
 
     public void start() {
-        Init();
+        MInit();
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -73,9 +97,12 @@ public class Game extends JPanel implements Runnable{
         currentScene.Mstart();
     }
 
-    public void update(double dt){
-
+    public void Mupdate(double dt){
+        update(dt);
         currentScene.Mupdate(dt);
+    }
+
+    public void update(double dt){
     }
 
     public GavaMouseListener getMouseListener(){
@@ -95,7 +122,7 @@ public class Game extends JPanel implements Runnable{
             double remainingTime = nextDrawTime - System.nanoTime();
 
             //Permet de mettre � jour les diff�rentes variables du jeu
-            update(nextDrawTime);
+            Mupdate(nextDrawTime);
             //Dessine sur l'�cran le personnage et la map avec les nouvelles informations. la m�thode "paintComponent" doit obligatoirement �tre appel�e avec "repaint()"
 
             //permet de detruire les entités inutiles
@@ -122,7 +149,6 @@ public class Game extends JPanel implements Runnable{
             }
 
             CurrentFps = 1000000000/(System.nanoTime()-now);
-            frame.setTitle(CurrentFps + " FPS");
 
         }
     }
