@@ -16,7 +16,7 @@ public class Game extends JPanel implements Runnable{
     private Scene currentScene;
     private final int FPS = 60;
 
-    public Game() {
+    Game() {
         super();
     }
 
@@ -28,6 +28,7 @@ public class Game extends JPanel implements Runnable{
 
         frame.setLayout( new BorderLayout());
         frame.setSize(800, 600);
+        System.out.println(frame.getSize());
         frame.setTitle("Gava default window");
         frame.addMouseListener(new GavaMouseListener());
         frame.addKeyListener(new GavaKeyListener());
@@ -38,20 +39,15 @@ public class Game extends JPanel implements Runnable{
         });
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
-        this.init();
         frame.setVisible(true);
 
     }
 
-    @Override
+
     public Dimension getSize() {
         return frame.getSize();
     }
 
-    public void init(){
-
-
-    }
 
     public void setTitle(String title){
         frame.setTitle(title);
@@ -64,6 +60,7 @@ public class Game extends JPanel implements Runnable{
     static public Game getInstance() {
         if (instance == null) {
             instance = new Game();
+            instance.MInit();
             instance.setVisible(true);
         }
         return instance;
@@ -87,7 +84,6 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void start() {
-        MInit();
         gameThread = new Thread(this);
         gameThread.start();
     }
