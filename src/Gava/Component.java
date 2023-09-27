@@ -17,12 +17,24 @@ public abstract class Component {
         this.isDestroyed = true;
     }
 
-    public abstract void start();
+    public void start(){
+
+    }
     public void Mstart(){
         this.start();
     }
-    public abstract void update(double dt);
+    public void update(double dt){
+
+    }
     public void Mupdate(double dt){
         this.update(dt);
     }
+
+    public void Mend(){
+        end();
+    }
+    public void end(){
+
+    }
+
 }

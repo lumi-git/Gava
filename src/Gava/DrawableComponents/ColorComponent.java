@@ -6,7 +6,7 @@ import Gava.GameObject;
 import java.awt.*;
 
 public abstract class ColorComponent extends DrawableComponent {
-    private Color color = Color.BLACK;
+    protected Color color = Color.BLACK;
 
     public Color getColor() {
         return color;

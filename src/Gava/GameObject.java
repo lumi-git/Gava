@@ -109,4 +109,11 @@ public abstract class GameObject {
         return null;
     }
 
+    public void Mend(){
+        end();
+    }
+
+    public void end(){
+
+    }
 }

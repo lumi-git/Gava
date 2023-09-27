@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class DrawRectComponent extends ColorComponent {
 
-    private Color color;
     public DrawRectComponent(Color color, GameObject parent){
         super(parent);
 

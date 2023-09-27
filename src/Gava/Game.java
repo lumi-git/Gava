@@ -1,4 +1,8 @@
 package Gava;
+import Gava.DefaultGameObjects.FPSdisplay;
+import Gava.DefaultGameObjects.GameObjectsDisplay;
+import Gava.utility.FpsManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -6,6 +10,8 @@ import java.util.ArrayList;
 public class Game extends JPanel implements Runnable{
     Thread gameThread;
     double CurrentFps = 0;
+    FpsManager fpsManager = new FpsManager();
+
     JFrame frame = new JFrame("GameWindow");
     public Canvas canvas = new Canvas();
     static private Game instance = null;
@@ -15,14 +21,10 @@ public class Game extends JPanel implements Runnable{
     private int screenHeight = 600;
 
     private Scene currentScene;
-    private final int FPS = 60;
+    private int FPS = 60;
 
     Game() {
         super();
-    }
-
-    public Scene getCurrentScene() {
-        return currentScene;
     }
 
     public void MInit(){
@@ -39,7 +41,7 @@ public class Game extends JPanel implements Runnable{
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                System.exit(0);
+                Game.getInstance().end();
             }
         });
         frame.add(Game.getInstance());
@@ -47,6 +49,14 @@ public class Game extends JPanel implements Runnable{
         frame.setVisible(true);
 
     }
+    public Scene getCurrentScene() {
+        return currentScene;
+    }
+
+    public FpsManager getFpsManager() {
+        return fpsManager;
+    }
+
 
     public void setScreenHeight(int height){
         this.screenHeight = height;
@@ -83,8 +93,12 @@ public class Game extends JPanel implements Runnable{
         return go;
     }
 
-    public void getFps(){
-        System.out.println(CurrentFps);
+    public double getFps(){
+        return CurrentFps;
+    }
+
+    public double setFps(int fps){
+        return FPS = fps;
     }
 
     public JFrame getFrame(){
@@ -96,41 +110,43 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void start() {
+
         gameThread = new Thread(this);
         gameThread.start();
+
+
     }
 
     public void setCurrentScene(int id){
         currentScene = scenes.get(id);
+        CreateDebugObjects();
         currentScene.Mstart();
+
     }
 
-    public void Mupdate(double dt){
-        update(dt);
+    private void Mupdate(double dt){
         currentScene.Mupdate(dt);
         Input.getInstance().frameReset();
     }
 
-    public void update(double dt){
+    public void CreateDebugObjects(){
+        if (Debug.getDebugOpt("fps"))
+            Instantiate(new FPSdisplay());
+        if (Debug.getDebugOpt("GameObjects"))
+            Instantiate(new GameObjectsDisplay());
     }
 
-
     public void run() {
-        double drawInterval = 1000000000/FPS; // rafraichissement chaque 0.0166666 secondes
+        double drawInterval = (double) 1000000000 /FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
 
-        while(gameThread != null) { //Tant que le thread du jeu est actif
+        while(gameThread != null) {
             double now = System.nanoTime();
-            double remainingTime = nextDrawTime - System.nanoTime();
+            double remainingTime =0;
 
-            //Permet de mettre � jour les diff�rentes variables du jeu
             Mupdate(nextDrawTime);
-            //Dessine sur l'�cran le personnage et la map avec les nouvelles informations. la m�thode "paintComponent" doit obligatoirement �tre appel�e avec "repaint()"
 
-            //permet de detruire les entités inutiles
-
-            //Calcule le temps de pause du thread
-
+            repaint();
             try {
                 remainingTime = nextDrawTime - System.nanoTime();
                 remainingTime = remainingTime/1000000;
@@ -140,7 +156,7 @@ public class Game extends JPanel implements Runnable{
                 }
 
                 Thread.sleep((long)remainingTime);
-                repaint();
+
 
 
                 nextDrawTime += drawInterval;
@@ -152,7 +168,14 @@ public class Game extends JPanel implements Runnable{
 
             CurrentFps = 1000000000/(System.nanoTime()-now);
 
+            if (Debug.getDebugOpt("fps")){
+                fpsManager.addFps(CurrentFps);
+                fpsManager.mean();
+            }
+
+
         }
+
     }
 
     public void paintComponent(Graphics g) {
@@ -162,6 +185,14 @@ public class Game extends JPanel implements Runnable{
         g.fillRect(0,0,800,600);
 
         currentScene.Mdraw(g);
+    }
+
+    public void end(){
+        if (Debug.getDebugOpt("fps")){
+            Debug.log(fpsManager.toString());
+        }
+        currentScene.Mend();
+        System.exit(0);
     }
 
 }

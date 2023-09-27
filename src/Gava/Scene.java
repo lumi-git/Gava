@@ -35,8 +35,13 @@ public abstract class Scene {
         Iterator<GameObject> it = gameObjects.iterator();
         while (it.hasNext()) {
             GameObject go = it.next();
-            if (go.isDestroyed())
+            if (go.isDestroyed()){
+                go.Mend();
                 it.remove();
+
+            }
+
+
             else go.Mupdate(dt);
         }
     }
@@ -47,8 +52,11 @@ public abstract class Scene {
         Iterator<DrawableComponent> it = drawableComponents.iterator();
         while (it.hasNext()) {
             DrawableComponent dc = it.next();
-            if (dc.isDestroyed())
+            if (dc.isDestroyed()){
+                dc.Mend();
                 it.remove();
+            }
+
             else dc.Mdraw(g);
         }
 
@@ -63,8 +71,16 @@ public abstract class Scene {
         this.start();
 
     }
-    public abstract void start();
+    public void start(){
+    }
 
+    public void Mend(){
+        this.end();
+    }
+
+    public void end() {
+
+    }
 
 
 }
