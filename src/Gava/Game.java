@@ -62,6 +62,7 @@ public class Game extends JPanel implements Runnable{
          * need to be called if any image is used in a sprite component
          */
         imageLibrary = new ImageLibrary(folderpaht);
+
     }
 
     public ImageLibrary getImageLibrary() {
@@ -115,14 +116,13 @@ public class Game extends JPanel implements Runnable{
         if (instance == null) {
             instance = new Game();
             instance.MInit();
-            instance.setVisible(true);
-            instance.frame.setVisible(true);
         }
         return instance;
     }
 
     public static GameObject Instantiate(GameObject go){
-        Game.getInstance().currentScene.addGameObject(go);
+
+        Game.getInstance().getCurrentScene().addGameObject(go);
         return go;
     }
 
@@ -143,14 +143,17 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void start() {
-        gameThread = new Thread(this);
+        gameThread = new Thread(Game.getInstance());
         gameThread.start();
+        instance.setVisible(true);
+        instance.frame.setVisible(true);
     }
 
     public void setCurrentScene(int id){
         currentScene = scenes.get(id);
-        currentScene.Mstart();
         CreateDebugObjects();
+        currentScene.Mstart();
+
     }
 
     private void Mupdate(double dt){
@@ -187,6 +190,7 @@ public class Game extends JPanel implements Runnable{
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
 
             CurrentFps = 1000000000/(System.nanoTime()-now);
 

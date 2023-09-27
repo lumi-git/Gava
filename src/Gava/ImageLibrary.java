@@ -27,12 +27,9 @@ public class ImageLibrary {
     public void LoadImagesFromFolder(String folderPath){
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
-        System.out.println("Loading images from : "+listOfFiles.length);
-
         assert listOfFiles != null;
         for (File file : listOfFiles) {
             if (file.isFile()) {
-                System.out.println("Loading image : "+file.getName());
                 try {
                     images.put(file.getName(),ImageIO.read(file));
                 } catch (IOException e) {

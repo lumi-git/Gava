@@ -17,7 +17,7 @@ public abstract class Scene {
     private final ArrayList<ArrayList<DrawableComponent>> drawLayers = new ArrayList<ArrayList<DrawableComponent>>();
 
     public Scene(){
-        for(int i = Game.getInstance().getDrawLayerCount();i <0 ;i--)
+        for(int i = Game.getInstance().getDrawLayerCount() ; i >0 ;i--)
             drawLayers.add(new ArrayList<DrawableComponent>());
     }
 
@@ -47,7 +47,7 @@ public abstract class Scene {
 
     public void Mdraw(Graphics g){
 
-        if (drawableComponentsTOADD.size() > 0){
+        if (!drawableComponentsTOADD.isEmpty()){
             Iterator<DrawableComponent> it = drawableComponentsTOADD.iterator();
             while (it.hasNext()){
                 DrawableComponent dc = it.next();
@@ -81,6 +81,7 @@ public abstract class Scene {
 
     public abstract void update(double dt);
     public void Mstart(){
+
         this.start();
 
     }
