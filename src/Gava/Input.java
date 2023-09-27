@@ -31,6 +31,7 @@ public class Input {
     }
 
     public void frameReset(){
+        mouseListener.frameReset();
         mousePositionAlreadyCalculated = false;
     }
 
@@ -52,6 +53,10 @@ public class Input {
 
     public static boolean isMousePressed(int buttonCode){
         return GavaMouseListener.isMouseButtonPressed(buttonCode);
+    }
+
+    public static boolean isMouseClicked(int buttonCode){
+        return GavaMouseListener.isMouseButtonClicked(buttonCode);
     }
 
 }

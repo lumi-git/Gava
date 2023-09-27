@@ -5,34 +5,46 @@ import java.util.ArrayList;
 
 class GavaMouseListener implements MouseListener, MouseWheelListener, MouseMotionListener {
 
-    public static final Boolean[] mouseButtons = new Boolean[4];
+    public static final Boolean[] mouseButtonsPressed = new Boolean[4];
+    public static final Boolean[] mouseButtonsClicked = new Boolean[4];
 
     public static boolean isMouseButtonPressed(int ButtonCode){
-        return mouseButtons[ButtonCode];
+        return mouseButtonsPressed[ButtonCode];
     }
 
+    public static boolean isMouseButtonClicked(int ButtonCode){return mouseButtonsClicked[ButtonCode];}
 
+    public void frameReset(){
+        for (int i = 0; i < mouseButtonsClicked.length; i++) {
+            mouseButtonsClicked[i] = false;
+        }
+    }
 
     public GavaMouseListener(){
-        for (int i = 0; i < mouseButtons.length; i++) {
-            mouseButtons[i] = false;
+        for (int i = 0; i < mouseButtonsClicked.length; i++) {
+            mouseButtonsClicked[i] = false;
+        }
+        for (int i = 0; i < mouseButtonsPressed.length; i++) {
+            mouseButtonsPressed[i] = false;
         }
     }
     public Boolean[] getMouseButtons() {
-        return mouseButtons;
+        return mouseButtonsPressed;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
+        //mouseButtonsClicked[e.getButton()] = true;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouseButtons[e.getButton()] = true;
+        mouseButtonsPressed[e.getButton()] = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseButtons[e.getButton()] = false;
+        mouseButtonsPressed[e.getButton()] = false;
+        mouseButtonsClicked[e.getButton()] = true;
     }
 
     @Override

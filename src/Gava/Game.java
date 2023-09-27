@@ -16,7 +16,7 @@ public class Game extends JPanel implements Runnable{
     FpsManager fpsManager = new FpsManager();
 
     JFrame frame = new JFrame("GameWindow");
-    public Canvas canvas = new Canvas();
+
     static private Game instance = null;
     private final ArrayList<Scene> scenes = new ArrayList<Scene>();
 
@@ -64,10 +64,11 @@ public class Game extends JPanel implements Runnable{
     public void initImageLibrary(String folderpaht){
         /**
          * need to be called if any image is used in a sprite component
-         */
+         **/
         imageLibrary = new ImageLibrary(folderpaht);
 
     }
+
 
     public PhysicGlobalRules getPhysicGlobalRules(){
         return physRules;

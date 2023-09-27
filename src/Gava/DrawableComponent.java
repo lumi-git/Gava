@@ -14,8 +14,6 @@ public abstract class DrawableComponent extends Component {
 
     public abstract void  draw(Graphics g);
 
-
-
     @Override
     public void start() {
 

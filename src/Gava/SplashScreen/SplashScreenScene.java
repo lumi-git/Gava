@@ -12,6 +12,7 @@ public class SplashScreenScene extends Scene {
     @Override
     public void start() {
         Debug.log("splashscreen");
+        Game.getInstance().setBackground(new Color(89, 91, 241));
         title = new EmbededAwtGameObject(new Label("Game Made with Gava"));
         Game.Instantiate(title);
 

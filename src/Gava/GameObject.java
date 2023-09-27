@@ -100,12 +100,10 @@ public abstract class GameObject {
             dc.Mend();
         }
     }
-
     public void addDrawableComponent(DrawableComponent dc){
         drawableComponentsTOADD.add(dc);
         Game.getInstance().getCurrentScene().addDrawableComponent(dc);
     }
-
 
     public ArrayList<DrawableComponent> getDrawableComponents(){
         return this.drawableComponents;

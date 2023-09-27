@@ -10,7 +10,7 @@ import java.awt.*;
 public class GameObjectsDisplay extends Gava.GameObject{
     @Override
     public void start() {
-        DrawableComponent dc = new DrawTextComponent(Color.blue,"text",this);
+        DrawableComponent dc = new DrawTextComponent(Color.black,"text",this);
         dc.setDrawLayer(1);
         this.addDrawableComponent(dc);
 
