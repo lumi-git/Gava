@@ -24,6 +24,8 @@ public class Game extends JPanel implements Runnable{
 
     private ImageLibrary imageLibrary;
 
+    private PhysicGlobalRules physRules = new PhysicGlobalRules();
+
     private Scene currentScene;
     private int FPS = 60;
 
@@ -63,6 +65,10 @@ public class Game extends JPanel implements Runnable{
          */
         imageLibrary = new ImageLibrary(folderpaht);
 
+    }
+
+    public PhysicGlobalRules getPhysicGlobalRules(){
+        return physRules;
     }
 
     public ImageLibrary getImageLibrary() {

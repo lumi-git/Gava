@@ -45,4 +45,20 @@ public class Vector2D {
         return new Vector2D(this.x, this.y);
     }
 
+    public static Vector2D up(){
+        return new Vector2D(0,-1);
+    }
+    public static Vector2D down(){
+        return new Vector2D(0,1);
+    }
+
+    public static Vector2D left(){
+        return new Vector2D(-1,0);
+    }
+
+    public static Vector2D right(){
+        return new Vector2D(1,0);
+    }
+
+
 }
