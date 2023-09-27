@@ -7,10 +7,11 @@ public abstract class GameObject {
     private boolean isDestroyed = false;
     private final Transform transform = new Transform();
     private final ArrayList<Component> components = new ArrayList<Component>();
-    private final ArrayList<Component> componentsTOREMOVE = new ArrayList<Component>();
+    private final ArrayList<Component> componentsTOADD = new ArrayList<Component>();
 
     private final ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
-    private final ArrayList<DrawableComponent> drawableComponentsTOREMOVE = new ArrayList<DrawableComponent>();
+
+    private final ArrayList<DrawableComponent> drawableComponentsTOADD = new ArrayList<DrawableComponent>();
 
     private final String name;
 
@@ -32,12 +33,12 @@ public abstract class GameObject {
     public abstract void start();
 
     public void Mupdate(double dt){
-        components.removeAll(componentsTOREMOVE);
-        drawableComponents.removeAll(drawableComponentsTOREMOVE);
-        componentsTOREMOVE.clear();
-        drawableComponentsTOREMOVE.clear();
+        components.addAll(componentsTOADD);
+        componentsTOADD.clear();
+        drawableComponents.addAll(drawableComponentsTOADD);
+        drawableComponentsTOADD.clear();
 
-            this.update(dt);
+        this.update(dt);
 
         Iterator<Component> it = components.iterator();
         while (it.hasNext()) {
@@ -54,14 +55,16 @@ public abstract class GameObject {
         return this.isDestroyed;
     }
     public void addComponent(Component component){
-        this.components.add(component);
+        this.componentsTOADD.add(component);
         component.Mstart();
     }
 
     public void removeComponent(Component component){
-        this.componentsTOREMOVE.add(component);
+        component.destroy();
     }
-
+    public void removeDrawableComponent(DrawableComponent component){
+        component.destroy();
+    }
     public ArrayList<Component> getComponents(){
         return this.components;
     }
@@ -86,7 +89,7 @@ public abstract class GameObject {
     }
 
     public void addDrawableComponent(DrawableComponent dc){
-        drawableComponents.add(dc);
+        drawableComponentsTOADD.add(dc);
         Game.getInstance().getCurrentScene().addDrawableComponent(dc);
     }
 
@@ -96,10 +99,11 @@ public abstract class GameObject {
 
     }
 
-    public DrawableComponent getDrawableComponent(Class<?> componentClass){
+    public <T> T getDrawableComponent(Class<T> componentClass){
+        //TODO: replace with hash table
         for(DrawableComponent c : drawableComponents){
             if(c.getClass() == componentClass){
-                return c;
+                return (T) c;
             }
         }
         return null;

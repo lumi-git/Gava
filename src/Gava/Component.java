@@ -1,7 +1,7 @@
 package Gava;
 
 public abstract class Component {
-
+    boolean added = false;
     boolean isDestroyed = false;
     protected GameObject parent;
 

@@ -6,25 +6,31 @@ import java.util.Iterator;
 
 public abstract class Scene {
     private final ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+    private final ArrayList<GameObject> gameObjectsTOADD = new ArrayList<GameObject>();
 
     private final ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
 
+    private final ArrayList<DrawableComponent> drawableComponentsTOADD = new ArrayList<DrawableComponent>();
+
     public void addDrawableComponent(DrawableComponent dc){
-        drawableComponents.add(dc);
+        drawableComponentsTOADD.add(dc);
     }
 
     public ArrayList<DrawableComponent> getDrawableComponents(){
         return this.drawableComponents;
     }
 
+
+
     public void addGameObject(GameObject go){
-        gameObjects.add(go);
+        gameObjectsTOADD.add(go);
         go.Mstart();
     }
 
 
     public void Mupdate(double dt){
-
+        gameObjects.addAll(gameObjectsTOADD);
+        gameObjectsTOADD.clear();
         this.update(dt);
         Iterator<GameObject> it = gameObjects.iterator();
         while (it.hasNext()) {
@@ -36,6 +42,8 @@ public abstract class Scene {
     }
 
     public void Mdraw(Graphics g){
+        drawableComponents.addAll(drawableComponentsTOADD);
+        drawableComponentsTOADD.clear();
         Iterator<DrawableComponent> it = drawableComponents.iterator();
         while (it.hasNext()) {
             DrawableComponent dc = it.next();
@@ -43,6 +51,7 @@ public abstract class Scene {
                 it.remove();
             else dc.Mdraw(g);
         }
+
     }
 
     public ArrayList<GameObject> getGameObjects(){

@@ -6,11 +6,12 @@ import Gava.RotateRect;
 
 import java.awt.*;
 
-public class DrawRectComponent extends DrawableComponent {
+public class DrawRectComponent extends ColorComponent {
 
-    private final Color color;
+    private Color color;
     public DrawRectComponent(Color color, GameObject parent){
         super(parent);
+
         this.color = color;
     }
 
@@ -34,4 +35,5 @@ public class DrawRectComponent extends DrawableComponent {
                     (int) parent.getTransform().getPosition().y, (int) parent.getTransform().getScale().x, (int) parent.getTransform().getScale().y);
         }
     }
+
 }

@@ -18,6 +18,11 @@ public class Transform {
     public Vector2D getPosition(){
         return this.position;
     }
+
+    public Vector2D getCenteredPosition(){
+        return new Vector2D(this.position.x + (this.scale.x / 2), this.position.y + (this.scale.y / 2));
+    }
+
     public Vector2D getScale(){
         return this.scale;
     }
