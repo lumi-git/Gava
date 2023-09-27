@@ -22,7 +22,12 @@ public class DrawRectComponent extends DrawableComponent{
     public void draw(Graphics g) {
         g.setColor(color);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.fill(RotateRect.rotate(new Rectangle((int) parent.getTransform().getPosition().x,
-        (int) parent.getTransform().getPosition().y, (int) parent.getTransform().getScale().x, (int) parent.getTransform().getScale().y), parent.getTransform().getRotation()));
+        if (parent.getTransform().getRotation() != 0) {
+            g2d.fill(RotateRect.rotate(new Rectangle((int) parent.getTransform().getPosition().x,
+                    (int) parent.getTransform().getPosition().y, (int) parent.getTransform().getScale().x, (int) parent.getTransform().getScale().y), parent.getTransform().getRotation()));
+        }else{
+            g2d.fillRect((int) parent.getTransform().getPosition().x,
+                    (int) parent.getTransform().getPosition().y, (int) parent.getTransform().getScale().x, (int) parent.getTransform().getScale().y);
+        }
     }
 }

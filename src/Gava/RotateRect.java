@@ -7,8 +7,6 @@ import java.awt.geom.Rectangle2D;
 public class RotateRect {
     public static Shape rotate(Rectangle rect, double angle) {
         Rectangle2D myRect = new Rectangle2D.Double(rect.x, rect.y, rect.width, rect.height);
-        AffineTransform at = AffineTransform.getRotateInstance(angle - 90, rect.x + rect.width / 2, rect.y + rect.height / 2);
-        Shape rotatedShape = at.createTransformedShape(myRect);
-        return rotatedShape;
+        return AffineTransform.getRotateInstance(angle - 90, rect.x + rect.width / 2, rect.y + rect.height / 2).createTransformedShape(myRect);
     }
 }
