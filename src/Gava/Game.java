@@ -41,9 +41,9 @@ public class Game extends JPanel implements Runnable{
         frame.setTitle("Gava default window");
         frame.setBackground(Color.black);
         addMouseListener(Input.getInstance().getMouseListener());
-        addKeyListener(Input.getInstance().getKeyListener());
         addMouseMotionListener(Input.getInstance().getMouseListener());
         addMouseWheelListener(Input.getInstance().getMouseListener());
+        frame.addKeyListener(Input.getInstance().getKeyListener());
         frame.setLocationRelativeTo(null);
 
         frame.addWindowListener(new WindowAdapter() {
