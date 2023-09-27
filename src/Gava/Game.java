@@ -1,5 +1,4 @@
 package Gava;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,6 +11,8 @@ public class Game extends JPanel implements Runnable{
     static private Game instance = null;
     private final ArrayList<Scene> scenes = new ArrayList<Scene>();
 
+    private int screenWidth = 800;
+    private int screenHeight = 600;
 
     private Scene currentScene;
     private final int FPS = 60;
@@ -27,11 +28,15 @@ public class Game extends JPanel implements Runnable{
     public void MInit(){
 
         frame.setLayout( new BorderLayout());
-        frame.setSize(800, 600);
-        System.out.println(frame.getSize());
+        frame.setSize(screenWidth, screenHeight);
+        setPreferredSize(new Dimension(screenWidth, screenHeight));
         frame.setTitle("Gava default window");
-        frame.addMouseListener(new GavaMouseListener());
-        frame.addKeyListener(new GavaKeyListener());
+        addMouseListener(Input.getInstance().getMouseListener());
+        addKeyListener(Input.getInstance().getKeyListener());
+        addMouseMotionListener(Input.getInstance().getMouseListener());
+        addMouseWheelListener(Input.getInstance().getMouseListener());
+        frame.setLocationRelativeTo(null);
+
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -43,6 +48,13 @@ public class Game extends JPanel implements Runnable{
 
     }
 
+    public void setScreenHeight(int height){
+        this.screenHeight = height;
+    }
+
+    public void setScreenWidth(int width){
+        this.screenWidth = width;
+    }
 
     public Dimension getSize() {
         return frame.getSize();
@@ -96,18 +108,12 @@ public class Game extends JPanel implements Runnable{
     public void Mupdate(double dt){
         update(dt);
         currentScene.Mupdate(dt);
+        Input.getInstance().frameReset();
     }
 
     public void update(double dt){
     }
 
-    public GavaMouseListener getMouseListener(){
-        return (GavaMouseListener)frame.getMouseListeners()[0];
-    }
-
-    public GavaKeyListener getKeyListener(){
-        return (GavaKeyListener)frame.getKeyListeners()[0];
-    }
 
     public void run() {
         double drawInterval = 1000000000/FPS; // rafraichissement chaque 0.0166666 secondes

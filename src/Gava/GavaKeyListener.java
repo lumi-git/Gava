@@ -3,7 +3,7 @@ package Gava;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GavaKeyListener implements KeyListener {
+class GavaKeyListener implements KeyListener {
 
     public static boolean[] keys = new boolean[1000];
 

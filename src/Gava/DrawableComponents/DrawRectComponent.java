@@ -1,8 +1,12 @@
-package Gava;
+package Gava.DrawableComponents;
+
+import Gava.DrawableComponent;
+import Gava.GameObject;
+import Gava.RotateRect;
 
 import java.awt.*;
 
-public class DrawRectComponent extends DrawableComponent{
+public class DrawRectComponent extends DrawableComponent {
 
     private final Color color;
     public DrawRectComponent(Color color, GameObject parent){

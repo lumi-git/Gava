@@ -3,7 +3,7 @@ package Gava;
 public abstract class Component {
 
     boolean isDestroyed = false;
-    GameObject parent;
+    protected GameObject parent;
 
     public Component(GameObject parent){
         this.parent = parent;

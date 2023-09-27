@@ -37,4 +37,14 @@ public class Transform {
         return new Transform(this.position.clone(), this.scale.clone(), this.rotation);
     }
 
+    public void Forward(double speed){
+        this.position.x += Math.cos(this.rotation) * speed;
+        this.position.y += Math.sin(this.rotation) * speed;
+    }
+
+    public void Move(Vector2D direction, double speed){
+        this.position.x += direction.x * speed;
+        this.position.y += direction.y * speed;
+    }
+
 }

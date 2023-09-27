@@ -1,12 +1,17 @@
 package Gava;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-public class GavaMouseListener implements MouseListener {
+class GavaMouseListener implements MouseListener, MouseWheelListener, MouseMotionListener {
 
-    private final Boolean[] mouseButtons = new Boolean[4];
+    public static final Boolean[] mouseButtons = new Boolean[4];
+
+    public static boolean isMouseButtonPressed(int ButtonCode){
+        return mouseButtons[ButtonCode];
+    }
+
+
 
     public GavaMouseListener(){
         for (int i = 0; i < mouseButtons.length; i++) {
@@ -40,4 +45,18 @@ public class GavaMouseListener implements MouseListener {
 
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+
+    }
 }
