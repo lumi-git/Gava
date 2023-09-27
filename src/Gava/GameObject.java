@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public abstract class GameObject {
+
     private boolean isDestroyed = false;
     private final Transform transform = new Transform();
     private final ArrayList<Component> components = new ArrayList<Component>();
@@ -22,6 +23,11 @@ public abstract class GameObject {
     public GameObject(){
         this.name = "Gava.GameObject";
     }
+
+    public String getName(){
+        return this.name;
+    }
+
 
     public void Mstart() {
         this.start();

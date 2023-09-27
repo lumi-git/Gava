@@ -1,5 +1,9 @@
 package Gava;
 
+import Gava.DefaultGameObjects.FPSdisplay;
+import Gava.DefaultGameObjects.GameObjectsDisplay;
+
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,5 +30,6 @@ public class Debug {
     public static void setDebugOpt(String opt,boolean value){
         debugs.put(opt,value);
     }
+
 
 }

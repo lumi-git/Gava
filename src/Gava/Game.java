@@ -9,6 +9,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 public class Game extends JPanel implements Runnable{
     Thread gameThread;
+    private int DrawLayerCount = 10;
+
     double CurrentFps = 0;
     FpsManager fpsManager = new FpsManager();
 
@@ -30,9 +32,14 @@ public class Game extends JPanel implements Runnable{
     public void MInit(){
 
         frame.setLayout( new BorderLayout());
+        frame.setResizable(false);
+        setDoubleBuffered(true);
+        setOpaque(true);
+
         frame.setSize(screenWidth, screenHeight);
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         frame.setTitle("Gava default window");
+        frame.setBackground(Color.black);
         addMouseListener(Input.getInstance().getMouseListener());
         addKeyListener(Input.getInstance().getKeyListener());
         addMouseMotionListener(Input.getInstance().getMouseListener());
@@ -46,7 +53,7 @@ public class Game extends JPanel implements Runnable{
         });
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+
 
     }
     public Scene getCurrentScene() {
@@ -57,6 +64,19 @@ public class Game extends JPanel implements Runnable{
         return fpsManager;
     }
 
+    public int getDrawLayerCount() {
+        return DrawLayerCount;
+    }
+
+    public void setDrawLayerCount(int count){
+        DrawLayerCount = count;
+    }
+
+    public void setSize(int width, int height){
+        setScreenHeight(height);
+        setScreenWidth(width);
+        frame.setSize(width,height);
+    }
 
     public void setScreenHeight(int height){
         this.screenHeight = height;
@@ -84,6 +104,7 @@ public class Game extends JPanel implements Runnable{
             instance = new Game();
             instance.MInit();
             instance.setVisible(true);
+            instance.frame.setVisible(true);
         }
         return instance;
     }
@@ -119,9 +140,8 @@ public class Game extends JPanel implements Runnable{
 
     public void setCurrentScene(int id){
         currentScene = scenes.get(id);
-        CreateDebugObjects();
         currentScene.Mstart();
-
+        CreateDebugObjects();
     }
 
     private void Mupdate(double dt){
@@ -172,18 +192,12 @@ public class Game extends JPanel implements Runnable{
                 fpsManager.addFps(CurrentFps);
                 fpsManager.mean();
             }
-
-
         }
 
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        g.setColor(Color.white);
-        g.fillRect(0,0,800,600);
-
         currentScene.Mdraw(g);
     }
 

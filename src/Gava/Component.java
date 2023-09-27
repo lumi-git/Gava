@@ -1,6 +1,13 @@
 package Gava;
 
 public abstract class Component {
+    private int Drawlayer = 0;
+    public int getDrawLayer(){
+        return Drawlayer;
+    }
+    public void setDrawLayer(int layer){
+        this.Drawlayer = layer;
+    }
     boolean added = false;
     boolean isDestroyed = false;
     protected GameObject parent;
