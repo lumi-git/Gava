@@ -1,6 +1,7 @@
 package Gava;
 import Gava.DefaultGameObjects.FPSdisplay;
 import Gava.DefaultGameObjects.GameObjectsDisplay;
+import Gava.SplashScreen.SplashScreenScene;
 import Gava.utility.FpsManager;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ public class Game extends JPanel implements Runnable{
     private PhysicGlobalRules physRules = new PhysicGlobalRules();
 
     private Scene currentScene;
+    private Scene mainScene;
     private int FPS = 60;
 
     Game() {
@@ -106,6 +108,13 @@ public class Game extends JPanel implements Runnable{
         this.screenWidth = width;
     }
 
+    public int getScreenWidth(){
+        return screenWidth;
+    }
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
     public Dimension getSize() {
         return frame.getSize();
     }
@@ -145,21 +154,48 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void addScene(Scene scene){
+        if (scene.isMainScene()){
+            mainScene = scene;
+        }
         scenes.add(scene);
+    }
+
+    public void startMainScene(){
+        setCurrentScene(mainScene);
     }
 
     public void start() {
         gameThread = new Thread(Game.getInstance());
+        setCurrentScene(new SplashScreenScene());
+        //if at  the moment of the start there is only one scene, put it main
+        if(scenes.size() ==1){
+            scenes.get(0).setMainScene();
+            mainScene = scenes.get(0);
+        }
         gameThread.start();
         instance.setVisible(true);
         instance.frame.setVisible(true);
+
     }
 
-    public void setCurrentScene(int id){
+    public void setCurrentSceneById(int id){
+        endCurrentScene();
         currentScene = scenes.get(id);
         CreateDebugObjects();
         currentScene.Mstart();
 
+    }
+
+    public void setCurrentScene(Scene scene){
+        endCurrentScene();
+        currentScene = scene;
+        CreateDebugObjects();
+        currentScene.Mstart();
+    }
+
+    public void endCurrentScene(){
+        if (currentScene !=null)
+            currentScene.Mend();
     }
 
     private void Mupdate(double dt){
@@ -220,5 +256,6 @@ public class Game extends JPanel implements Runnable{
         currentScene.Mend();
         System.exit(0);
     }
+
 
 }

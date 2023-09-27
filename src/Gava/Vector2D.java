@@ -60,5 +60,8 @@ public class Vector2D {
         return new Vector2D(1,0);
     }
 
-
+    @Override
+    public String toString() {
+        return "( x: " + x + "," + "y: " + y + ")";
+    }
 }

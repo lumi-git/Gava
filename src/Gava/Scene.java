@@ -16,9 +16,17 @@ public abstract class Scene {
 
     private final ArrayList<ArrayList<DrawableComponent>> drawLayers = new ArrayList<ArrayList<DrawableComponent>>();
 
+    private boolean isMainScene = false;
+
     public Scene(){
         for(int i = Game.getInstance().getDrawLayerCount() ; i >0 ;i--)
             drawLayers.add(new ArrayList<DrawableComponent>());
+    }
+    public void setMainScene(){
+        isMainScene = true;
+    }
+    public boolean isMainScene(){
+        return isMainScene;
     }
 
     public void addGameObject(GameObject go){
@@ -79,7 +87,9 @@ public abstract class Scene {
         return this.gameObjects;
     }
 
-    public abstract void update(double dt);
+    public void update(double dt){
+
+    }
     public void Mstart(){
 
         this.start();
@@ -89,6 +99,9 @@ public abstract class Scene {
     }
 
     public void Mend(){
+        for(GameObject go : getGameObjects()){
+            go.Mend();
+        }
         this.end();
     }
 

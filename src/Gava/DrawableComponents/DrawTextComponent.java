@@ -40,6 +40,10 @@ public class DrawTextComponent extends ColorComponent{
         this.text = text;
     }
 
+    public String getText(){
+        return text;
+    }
+
     public void setSize(int size){
         this.size = size;
         font = new Font(fontType, Font.PLAIN, size);

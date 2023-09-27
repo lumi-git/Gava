@@ -30,13 +30,16 @@ public abstract class GameObject {
 
 
     public void Mstart() {
+        this.getTransform().setScale(new Vector2D(100,100));
         this.start();
     }
     public Transform getTransform(){
         return this.transform;
     }
 
-    public abstract void start();
+    public void start(){
+
+    }
 
     public void Mupdate(double dt){
         components.addAll(componentsTOADD);
@@ -55,7 +58,9 @@ public abstract class GameObject {
         }
 
     }
-    public abstract void update(double dt);
+    public void update(double dt){
+
+    }
 
     public boolean isDestroyed(){
         return this.isDestroyed;
@@ -88,9 +93,11 @@ public abstract class GameObject {
         this.isDestroyed = true;
         for (Component c : components){
             c.destroy();
+            c.Mend();
         }
         for (DrawableComponent dc : drawableComponents){
             dc.destroy();
+            dc.Mend();
         }
     }
 
