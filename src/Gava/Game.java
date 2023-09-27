@@ -22,6 +22,8 @@ public class Game extends JPanel implements Runnable{
     private int screenWidth = 800;
     private int screenHeight = 600;
 
+    private ImageLibrary imageLibrary;
+
     private Scene currentScene;
     private int FPS = 60;
 
@@ -53,8 +55,19 @@ public class Game extends JPanel implements Runnable{
         });
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
+    }
 
+    public void initImageLibrary(String folderpaht){
+        /**
+         * need to be called if any image is used in a sprite component
+         */
+        imageLibrary = new ImageLibrary(folderpaht);
+    }
 
+    public ImageLibrary getImageLibrary() {
+        if(imageLibrary == null)
+            throw new NullPointerException("ImageLibrary is null, have you created one ?");
+        return imageLibrary;
     }
     public Scene getCurrentScene() {
         return currentScene;
@@ -89,7 +102,6 @@ public class Game extends JPanel implements Runnable{
     public Dimension getSize() {
         return frame.getSize();
     }
-
 
     public void setTitle(String title){
         frame.setTitle(title);
@@ -131,11 +143,8 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void start() {
-
         gameThread = new Thread(this);
         gameThread.start();
-
-
     }
 
     public void setCurrentScene(int id){
@@ -163,22 +172,15 @@ public class Game extends JPanel implements Runnable{
         while(gameThread != null) {
             double now = System.nanoTime();
             double remainingTime =0;
-
             Mupdate(nextDrawTime);
-
             repaint();
             try {
                 remainingTime = nextDrawTime - System.nanoTime();
                 remainingTime = remainingTime/1000000;
-
                 if(remainingTime < 0) {
                     remainingTime = 0;
                 }
-
                 Thread.sleep((long)remainingTime);
-
-
-
                 nextDrawTime += drawInterval;
 
             } catch (InterruptedException e) {
