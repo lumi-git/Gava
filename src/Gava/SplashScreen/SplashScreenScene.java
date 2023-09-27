@@ -12,7 +12,7 @@ public class SplashScreenScene extends Scene {
     @Override
     public void start() {
         Debug.log("splashscreen");
-        title = new EmbededAwtGameObject(new TextArea());
+        title = new EmbededAwtGameObject(new Label("Game Made with Gava"));
         Game.Instantiate(title);
 
         Timer timer = new Timer();
