@@ -1,6 +1,10 @@
 package Gava;
 
+import Gava.DrawableComponents.LightComponent;
+import Gava.utility.LightMap;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -22,6 +26,8 @@ public abstract class Scene {
         for(int i = Game.getInstance().getDrawLayerCount() ; i >0 ;i--)
             drawLayers.add(new ArrayList<DrawableComponent>());
     }
+
+
     public void setMainScene(){
         isMainScene = true;
     }
@@ -51,9 +57,11 @@ public abstract class Scene {
             }
             else go.Mupdate(dt);
         }
+
     }
 
     public void Mdraw(Graphics g){
+
 
         if (!drawableComponentsTOADD.isEmpty()){
             Iterator<DrawableComponent> it = drawableComponentsTOADD.iterator();
@@ -80,6 +88,13 @@ public abstract class Scene {
                 else dc.Mdraw(g);
             }
         }
+        if (Game.getInstance().getLightmap() != null){
+            Game.getInstance().getLightmap().clear();
+            // multiply the light canva of the game instance with g to get the final image
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.drawImage(Game.getInstance().getLightmap(), 0,0,null);
+        }
+
 
     }
 

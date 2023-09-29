@@ -36,10 +36,16 @@ public class Input {
     }
 
     public static Vector2D getMousePosition(){
-
+        Point p = new Point(0,0);
         if(!mousePositionAlreadyCalculated){
-            Point p = MouseInfo.getPointerInfo().getLocation();
-            mousePosition = new Vector2D(p.getX() - Game.getInstance().getLocationOnScreen().getX(), p.getY()-Game.getInstance().getLocationOnScreen().getY());
+            try{
+                p = MouseInfo.getPointerInfo().getLocation();
+                mousePosition = new Vector2D(p.getX()  - Game.getInstance().getLocationOnScreen().getX() +  Game.getInstance().getCamera().getPosition().x , p.getY()-Game.getInstance().getLocationOnScreen().getY() + Game.getInstance().getCamera().getPosition().y);
+            }
+            catch (Exception e){
+                return new Vector2D(0,0);
+            }
+
             mousePositionAlreadyCalculated = true;
             return mousePosition;
         }

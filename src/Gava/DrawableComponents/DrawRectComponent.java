@@ -1,8 +1,6 @@
 package Gava.DrawableComponents;
 
-import Gava.DrawableComponent;
-import Gava.GameObject;
-import Gava.RotateRect;
+import Gava.*;
 
 import java.awt.*;
 
@@ -24,14 +22,15 @@ public class DrawRectComponent extends ColorComponent {
 
     @Override
     public void draw(Graphics g) {
+        Camera camera = Game.getInstance().getCamera();
         g.setColor(color);
         Graphics2D g2d = (Graphics2D) g;
-        if (parent.getTransform().getRotation() != 0) {
-            g2d.fill(RotateRect.rotate(new Rectangle((int) parent.getTransform().getPosition().x,
-                    (int) parent.getTransform().getPosition().y, (int) parent.getTransform().getScale().x, (int) parent.getTransform().getScale().y), parent.getTransform().getRotation()));
+        if (parent.getReadonlyTransform().getRotation() != 0) {
+            g2d.fill(RotateRect.rotate(new Rectangle((int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
+                    (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y), (int) parent.getReadonlyTransform().getScale().x, (int) parent.getReadonlyTransform().getScale().y), parent.getReadonlyTransform().getRotation()));
         }else{
-            g2d.fillRect((int) parent.getTransform().getPosition().x,
-                    (int) parent.getTransform().getPosition().y, (int) parent.getTransform().getScale().x, (int) parent.getTransform().getScale().y);
+            g2d.fillRect((int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
+                    (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y), (int) parent.getReadonlyTransform().getScale().x, (int) parent.getReadonlyTransform().getScale().y);
         }
     }
 

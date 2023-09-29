@@ -1,5 +1,7 @@
 package Gava.DrawableComponents;
 
+import Gava.Camera;
+import Gava.Game;
 import Gava.GameObject;
 
 import java.awt.*;
@@ -21,11 +23,12 @@ public class DrawCircleComponent extends ColorComponent {
 
     @Override
     public void draw(Graphics g) {
+        Camera camera = Game.getInstance().getCamera();
         g.setColor(color);
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.fillOval((int) parent.getTransform().getPosition().x,
-                (int) parent.getTransform().getPosition().y, (int) parent.getTransform().getScale().x, (int) parent.getTransform().getScale().y);
+        g2d.fillOval((int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
+                (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y), (int) parent.getReadonlyTransform().getScale().x, (int) parent.getReadonlyTransform().getScale().y);
 
     }
 

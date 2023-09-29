@@ -25,7 +25,8 @@ public class KinematicComponent extends Component {
         if(useGravity){
             applyForce(Vector2D.down().scale(Game.getInstance().getPhysicGlobalRules().getGravity()));
         }
-        parent.getTransform().setPosition(parent.getTransform().getPosition().add(velocity));
+
+        parent.getModificationTransform().setPosition(parent.getModificationTransform().getPosition().add(velocity));
     }
 
 }

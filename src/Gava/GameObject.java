@@ -7,12 +7,18 @@ public abstract class GameObject {
 
     private boolean isDestroyed = false;
     private final Transform transform = new Transform();
-    private final ArrayList<Component> components = new ArrayList<Component>();
+    private Transform globalTransform = new Transform();
+    protected final ArrayList<Component> components = new ArrayList<Component>();
     private final ArrayList<Component> componentsTOADD = new ArrayList<Component>();
 
-    private final ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
+    protected final ArrayList<DrawableComponent> drawableComponents = new ArrayList<DrawableComponent>();
 
     private final ArrayList<DrawableComponent> drawableComponentsTOADD = new ArrayList<DrawableComponent>();
+
+    protected GameObject parent = null;
+    protected ArrayList<GameObject> children = new ArrayList<GameObject>();
+
+    private ArrayList<GameObject> childrenTOADD = new ArrayList<GameObject>();
 
     private final String name;
 
@@ -28,24 +34,52 @@ public abstract class GameObject {
         return this.name;
     }
 
+    public void addChild(GameObject child){
+        child.parent = this;
+        childrenTOADD.add(child);
+    }
+
 
     public void Mstart() {
-        this.getTransform().setScale(new Vector2D(100,100));
         this.start();
     }
-    public Transform getTransform(){
+    public Transform getModificationTransform(){
         return this.transform;
     }
+
+    public Transform getReadonlyTransform(){
+        if (parent != null){
+
+            return parent.getReadonlyTransform().Combine(transform);
+        }
+        else{
+
+            return transform;
+        }
+    }
+
 
     public void start(){
 
     }
 
     public void Mupdate(double dt){
-        components.addAll(componentsTOADD);
-        componentsTOADD.clear();
-        drawableComponents.addAll(drawableComponentsTOADD);
-        drawableComponentsTOADD.clear();
+
+        if (!childrenTOADD.isEmpty()){
+            children.addAll(childrenTOADD);
+            childrenTOADD.clear();
+        }
+
+        if(!componentsTOADD.isEmpty()){
+            components.addAll(componentsTOADD);
+            componentsTOADD.clear();
+        }
+
+        if(!drawableComponentsTOADD.isEmpty()){
+            drawableComponents.addAll(drawableComponentsTOADD);
+            drawableComponentsTOADD.clear();
+        }
+
 
         this.update(dt);
 
@@ -98,6 +132,10 @@ public abstract class GameObject {
         for (DrawableComponent dc : drawableComponents){
             dc.destroy();
             dc.Mend();
+        }
+        for (GameObject go : children){
+            go.destroy();
+            go.Mend();
         }
     }
     public void addDrawableComponent(DrawableComponent dc){

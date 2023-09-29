@@ -1,9 +1,6 @@
 package Gava.DrawableComponents;
 
-import Gava.DrawableComponent;
-import Gava.Game;
-import Gava.GameObject;
-import Gava.ImageLibrary;
+import Gava.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,7 +14,9 @@ public class DrawSpriteComponent extends DrawableComponent {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(image,(int)parent.getTransform().getPosition().x,(int)parent.getTransform().getPosition().y,(int)parent.getTransform().getScale().x,(int)parent.getTransform().getScale().y,null);
+        Camera camera = Game.getInstance().getCamera();
+        g.drawImage(image,(int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
+                (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y),(int)parent.getReadonlyTransform().getScale().x,(int)parent.getReadonlyTransform().getScale().y,null);
 
     }
 }

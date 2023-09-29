@@ -14,8 +14,8 @@ public class GameObjectsDisplay extends Gava.GameObject{
         dc.setDrawLayer(1);
         this.addDrawableComponent(dc);
 
-        this.getTransform().setScale(new Vector2D(100,10));
-        this.getTransform().setPosition(new Vector2D(10,50));
+        this.getModificationTransform().setScale(new Vector2D(100,10));
+        this.getModificationTransform().setPosition(new Vector2D(10,50));
 
     }
 

@@ -3,14 +3,19 @@ import Gava.DefaultGameObjects.FPSdisplay;
 import Gava.DefaultGameObjects.GameObjectsDisplay;
 import Gava.SplashScreen.SplashScreenScene;
 import Gava.utility.FpsManager;
+import Gava.utility.LightMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 public class Game extends JPanel implements Runnable{
     Thread gameThread;
     private int DrawLayerCount = 10;
+    private LightMap Lightmap ;
+
+    private Camera camera = new Camera();
 
     double CurrentFps = 0;
     FpsManager fpsManager = new FpsManager();
@@ -36,22 +41,23 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void MInit(){
-
+        Lightmap = new LightMap(screenWidth, screenHeight);
         frame.setLayout( new BorderLayout());
         frame.setResizable(false);
         setDoubleBuffered(true);
-        setOpaque(true);
+        setOpaque(false);
+
 
         frame.setSize(screenWidth, screenHeight);
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         frame.setTitle("Gava default window");
-        frame.setBackground(Color.black);
+
         addMouseListener(Input.getInstance().getMouseListener());
         addMouseMotionListener(Input.getInstance().getMouseListener());
         addMouseWheelListener(Input.getInstance().getMouseListener());
         frame.addKeyListener(Input.getInstance().getKeyListener());
-        frame.setLocationRelativeTo(null);
 
+        frame.setLocationRelativeTo(null);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 Game.getInstance().end();
@@ -59,7 +65,11 @@ public class Game extends JPanel implements Runnable{
         });
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
+
+
+
     }
+
 
     public void initImageLibrary(String folderpaht){
         /**
@@ -69,6 +79,13 @@ public class Game extends JPanel implements Runnable{
 
     }
 
+    public Camera getCamera(){
+        return camera;
+    }
+
+    public LightMap getLightmap(){
+        return Lightmap;
+    }
 
     public PhysicGlobalRules getPhysicGlobalRules(){
         return physRules;
@@ -167,12 +184,17 @@ public class Game extends JPanel implements Runnable{
 
     public void start() {
         gameThread = new Thread(Game.getInstance());
-        setCurrentScene(new SplashScreenScene());
+        if(Debug.getDebugOpt("splashscreen"))
+            setCurrentScene(new SplashScreenScene());
         //if at  the moment of the start there is only one scene, put it main
         if(scenes.size() ==1){
             scenes.get(0).setMainScene();
             mainScene = scenes.get(0);
         }
+        if(Debug.getDebugOpt("splashscreen"))
+            setCurrentScene(new SplashScreenScene());
+        else
+            setCurrentScene(mainScene);
         gameThread.start();
         instance.setVisible(true);
         instance.frame.setVisible(true);

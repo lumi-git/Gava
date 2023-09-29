@@ -1,5 +1,7 @@
 package Gava.DrawableComponents;
 
+import Gava.Camera;
+import Gava.Game;
 import Gava.GameObject;
 
 import java.awt.*;
@@ -27,13 +29,14 @@ public class DrawTextComponent extends ColorComponent{
 
     @Override
     public void draw(Graphics g) {
+        Camera camera = Game.getInstance().getCamera();
         g.setColor(color);
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setFont(font);
 
-        g2d.drawString(text,(int) parent.getTransform().getPosition().x,
-                (int) parent.getTransform().getPosition().y);
+        g2d.drawString(text,(int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
+                (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y));
     }
 
     public void setText(String text){

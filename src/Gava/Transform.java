@@ -52,4 +52,19 @@ public class Transform {
         this.position.y += direction.y * speed;
     }
 
+    public Transform Combine(Transform transform){
+        Transform newTransform = new Transform();
+        newTransform.setPosition(this.position.add(transform.getPosition()));
+        newTransform.setScale(transform.getScale());
+        return newTransform;
+    }
+
+    @Override
+    public String toString() {
+        return "Transform{" +
+                "position=" + position +
+                ", scale=" + scale +
+                ", rotation=" + rotation +
+                '}';
+    }
 }

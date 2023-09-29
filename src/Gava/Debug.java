@@ -19,6 +19,7 @@ public class Debug {
         Map<String,Boolean> map = new HashMap<>();
         map.put("fps",false);
         map.put("GameObjects",false);
+        map.put("splashscreen",false);
 
         return map;
     }
