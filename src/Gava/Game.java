@@ -65,9 +65,6 @@ public class Game extends JPanel implements Runnable{
         });
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
-
-
-
     }
 
 
@@ -183,9 +180,7 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void start() {
-        gameThread = new Thread(Game.getInstance());
-        if(Debug.getDebugOpt("splashscreen"))
-            setCurrentScene(new SplashScreenScene());
+        gameThread = new Thread(this);
         //if at  the moment of the start there is only one scene, put it main
         if(scenes.size() ==1){
             scenes.get(0).setMainScene();

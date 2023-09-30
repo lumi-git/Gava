@@ -12,6 +12,9 @@ public abstract class Scene {
     private final ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
     private final ArrayList<GameObject> gameObjectsTOADD = new ArrayList<GameObject>();
 
+    private final ArrayList<GameObject> gameObjectsTOSTART = new ArrayList<GameObject>();
+    private final ArrayList<GameObject> gameObjectsToStartTOADD = new ArrayList<GameObject>();
+
     private final ArrayList<DrawableComponent> drawableComponentsTOADD = new ArrayList<DrawableComponent>();
 
     public void addDrawableComponent(DrawableComponent dc){
@@ -37,14 +40,24 @@ public abstract class Scene {
 
     public void addGameObject(GameObject go){
         gameObjectsTOADD.add(go);
-        go.Mstart();
+        gameObjectsToStartTOADD.add(go);
     }
 
 
     public void Mupdate(double dt){
-        if (gameObjectsTOADD.size() > 0){
+        if (!gameObjectsTOADD.isEmpty()){
             gameObjects.addAll(gameObjectsTOADD);
             gameObjectsTOADD.clear();
+        }
+        if (!gameObjectsToStartTOADD.isEmpty()){
+            gameObjectsTOSTART.addAll(gameObjectsToStartTOADD);
+            gameObjectsToStartTOADD.clear();
+        }
+        if(!gameObjectsTOSTART.isEmpty()){
+            for(GameObject go : gameObjectsTOSTART){
+                go.Mstart();
+            }
+            gameObjectsTOSTART.clear();
         }
 
         this.update(dt);
@@ -89,6 +102,7 @@ public abstract class Scene {
             }
         }
         if (Game.getInstance().getLightmap() != null){
+
             Game.getInstance().getLightmap().clear();
             // multiply the light canva of the game instance with g to get the final image
             Graphics2D g2d = (Graphics2D) g;
@@ -108,6 +122,16 @@ public abstract class Scene {
     public void Mstart(){
 
         this.start();
+        if (!gameObjectsToStartTOADD.isEmpty()){
+            gameObjectsTOSTART.addAll(gameObjectsToStartTOADD);
+            gameObjectsToStartTOADD.clear();
+        }
+        if(!gameObjectsTOSTART.isEmpty()){
+            for(GameObject go : gameObjectsTOSTART){
+                go.Mstart();
+            }
+            gameObjectsTOSTART.clear();
+        }
 
     }
     public void start(){
