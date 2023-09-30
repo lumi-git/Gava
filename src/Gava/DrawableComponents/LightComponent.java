@@ -23,11 +23,11 @@ public class LightComponent extends DrawableComponent {
 
     @Override
     public void draw(Graphics g) {
-        Color[] colors = {color, new Color(0,0,0,0) };
-        Camera camera = Game.getInstance().getCamera();
-        Graphics2D gcv = getGraphics2D(camera, colors);
-        gcv.fillOval((int) (parent.getReadonlyTransform().getCenteredPosition().x - (camera.getPosition().x) - rayon/2 ),
-                (int) (parent.getReadonlyTransform().getCenteredPosition().y - ( camera.getPosition().y)  - rayon/2),(int)rayon,(int)rayon);
+        //Color[] colors = {color, new Color(0,0,0,0) };
+        //Camera camera = Game.getInstance().getCamera();
+        //Graphics2D gcv = getGraphics2D(camera, colors);
+        //gcv.fillOval((int) (parent.getReadonlyTransform().getCenteredPosition().x - (camera.getPosition().x) - rayon/2 ),
+                //(int) (parent.getReadonlyTransform().getCenteredPosition().y - ( camera.getPosition().y)  - rayon/2),(int)rayon,(int)rayon);
     }
 
     private Graphics2D getGraphics2D(Camera camera, Color[] colors) {

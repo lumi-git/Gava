@@ -1,11 +1,23 @@
 package Gava;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Input {
+
+
+
+    public static int ValueMappingOffset = 200;
+    public static int ValueMappingOffsetImpulse = 500;
     private static Input instance = null;
-    private static final GavaKeyListener keyListener = new GavaKeyListener();
-    private static final GavaMouseListener mouseListener = new GavaMouseListener();
+
+    private InputMappingManager inputMappingManager = new InputMappingManager();
+
+
+    private final GavaKeyListener keyListener = new GavaKeyListener();
+    private final GavaMouseListener mouseListener = new GavaMouseListener();
 
     private static boolean mousePositionAlreadyCalculated = false;
 
@@ -19,8 +31,19 @@ public class Input {
         return keyListener;
     }
 
-    private Input(){
+    private HashMap<String,Boolean> booleanInput;
 
+    private Input(){
+        booleanInput = inputMappingManager.buildBooleanInput();
+    }
+
+
+    public static boolean get(String inputName){
+        return getInstance().booleanInput.get(inputName);
+    }
+
+    public void registerBooleanEvent(int keyCode,boolean value){
+        getInstance().booleanInput.put(inputMappingManager.match(keyCode),value);
     }
 
     public static Input getInstance(){
@@ -31,8 +54,10 @@ public class Input {
     }
 
     public void frameReset(){
-        mouseListener.frameReset();
         mousePositionAlreadyCalculated = false;
+        for(EventEntry e : inputMappingManager.getImpulsiveEntry()){
+            registerBooleanEvent(e.getKey(),false);
+        }
     }
 
     public static Vector2D getMousePosition(){
@@ -51,18 +76,6 @@ public class Input {
         }
         return mousePosition;
 
-    }
-
-    public static boolean isKeyPressed(int keyCode){
-        return GavaKeyListener.isKeyPressed(keyCode);
-    }
-
-    public static boolean isMousePressed(int buttonCode){
-        return GavaMouseListener.isMouseButtonPressed(buttonCode);
-    }
-
-    public static boolean isMouseClicked(int buttonCode){
-        return GavaMouseListener.isMouseButtonClicked(buttonCode);
     }
 
 }
