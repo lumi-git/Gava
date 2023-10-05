@@ -5,7 +5,8 @@ import Gava.utility.LightMap;
 
 import java.awt.*;
 
-public class LightComponent extends DrawableComponent {
+//make public when released
+class LightComponent extends DrawableComponent {
 
     private int intensity;
     private int rayon;
@@ -23,6 +24,7 @@ public class LightComponent extends DrawableComponent {
 
     @Override
     public void draw(Graphics g) {
+        Debug.log(color.getAlpha()+"");
         Color[] colors = {color, new Color(0,0,0,0) };
         Camera camera = Game.getInstance().getCamera();
         Graphics2D gcv = getGraphics2D(camera, colors);
@@ -30,6 +32,7 @@ public class LightComponent extends DrawableComponent {
                 (int) (parent.getReadonlyTransform().getCenteredPosition().y - ( camera.getPosition().y)  - rayon/2),(int)rayon,(int)rayon);
     }
 
+    //probelm with the intensity (not sufficently bright)
     private Graphics2D getGraphics2D(Camera camera, Color[] colors) {
         Graphics2D gcv = (Graphics2D) Game.getInstance().getLightmap().getGraphics();
         gcv.setComposite(AlphaComposite.DstOut);

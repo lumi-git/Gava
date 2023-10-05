@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Game extends JPanel implements Runnable{
     Thread gameThread;
     private int DrawLayerCount = 10;
-    private LightMap Lightmap ;
+    //private LightMap Lightmap ;
 
     private Camera camera = new Camera();
 
@@ -41,7 +41,8 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void MInit(){
-        Lightmap = new LightMap(screenWidth, screenHeight);
+        //Lightmap = new LightMap(screenWidth, screenHeight);
+        //Lightmap.setGlobalLightening(100);
         frame.setLayout( new BorderLayout());
         frame.setResizable(false);
         setDoubleBuffered(true);
@@ -80,9 +81,9 @@ public class Game extends JPanel implements Runnable{
         return camera;
     }
 
-    public LightMap getLightmap(){
-        return Lightmap;
-    }
+    //public LightMap getLightmap(){
+    //    return Lightmap;
+    //}
 
     public PhysicGlobalRules getPhysicGlobalRules(){
         return physRules;

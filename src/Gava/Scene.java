@@ -1,6 +1,6 @@
 package Gava;
 
-import Gava.DrawableComponents.LightComponent;
+//import Gava.DrawableComponents.LightComponent;
 import Gava.utility.LightMap;
 
 import java.awt.*;
@@ -101,13 +101,13 @@ public abstract class Scene {
                 else dc.Mdraw(g);
             }
         }
-        if (Game.getInstance().getLightmap() != null){
-
-            Game.getInstance().getLightmap().clear();
+        //if (Game.getInstance().getLightmap() != null){
+        //
+        //    Game.getInstance().getLightmap().clear();
             // multiply the light canva of the game instance with g to get the final image
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(Game.getInstance().getLightmap(), 0,0,null);
-        }
+        //    Graphics2D g2d = (Graphics2D) g;
+        //    g2d.drawImage(Game.getInstance().getLightmap(), 0,0,null);
+        //}
 
 
     }

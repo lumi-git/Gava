@@ -1,12 +1,12 @@
 package Gava.DefaultGameObjects;
 
-import Gava.DrawableComponents.LightComponent;
+//import Gava.DrawableComponents.LightComponent;
 import Gava.Game;
 import Gava.GameObject;
 
 import java.awt.*;
-
-public class Light extends GameObject {
+//make public when released
+class Light extends GameObject {
     private int intensity = 255 ;
     private Color color = Color.white;
     private int rayon = 100;
