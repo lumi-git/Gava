@@ -18,6 +18,7 @@ class GavaMouseListener implements MouseListener, MouseWheelListener, MouseMotio
         for (int i = 0; i < mouseButtonsClicked.length; i++) {
             mouseButtonsClicked[i] = false;
         }
+
     }
 
     public GavaMouseListener(){
@@ -33,12 +34,13 @@ class GavaMouseListener implements MouseListener, MouseWheelListener, MouseMotio
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        //mouseButtonsClicked[e.getButton()] = true;
+        mouseButtonsClicked[e.getButton()] = true;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         mouseButtonsPressed[e.getButton()] = true;
+
     }
 
     @Override

@@ -1,5 +1,5 @@
 package Gava.DefaultGameObjects;
-
+/*
 //import Gava.DrawableComponents.LightComponent;
 import Gava.Game;
 import Gava.GameObject;
@@ -25,3 +25,4 @@ class Light extends GameObject {
         addDrawableComponent(new LightComponent(this,intensity,rayon,color));
     }
 }
+*/

@@ -62,6 +62,8 @@ public class Input {
     }
 
     public static boolean isMouseClicked(int buttonCode){
+        if (buttonCode < 1 || buttonCode > 3)
+            throw new IllegalArgumentException("buttonCode must be between 1 and 3");
         return GavaMouseListener.isMouseButtonClicked(buttonCode);
     }
 

@@ -4,7 +4,7 @@ import Gava.*;
 import Gava.utility.LightMap;
 
 import java.awt.*;
-
+/*
 //make public when released
 class LightComponent extends DrawableComponent {
 
@@ -45,3 +45,4 @@ class LightComponent extends DrawableComponent {
         return gcv;
     }
 }
+*/
