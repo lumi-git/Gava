@@ -8,7 +8,7 @@ public class RigidBody extends ColliderComponent {
 
     double mass = 1;
 
-    Vector2D friction = new Vector2D(0.1,0.1);
+    Vector2D friction = new Vector2D(0.2,0.2);
 
     Vector2D speed = new Vector2D();
     Vector2D force = new Vector2D();

@@ -245,7 +245,7 @@ public class Game extends JPanel implements Runnable{
         while(gameThread != null) {
             double now = System.nanoTime();
             double remainingTime =0;
-            Mupdate(nextDrawTime);
+            Mupdate(nextDrawTime*0.00000000000001);
             repaint();
             try {
                 remainingTime = nextDrawTime - System.nanoTime();
