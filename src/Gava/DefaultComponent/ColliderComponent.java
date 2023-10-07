@@ -21,7 +21,7 @@ public abstract class ColliderComponent  extends Component {
         //Debug.log("START FOR NEW Collision for object " + parent.getName() + " with " + other.getParent().getName() + "");
         this.other = other;
         isColliding = true;
-        onCollisionStay(other);
+        MonCollisionStay(other);
     }
 
     private boolean stateChanged(){
@@ -42,11 +42,16 @@ public abstract class ColliderComponent  extends Component {
         parent.onCollisionExit(other.getParent());
     }
 
-    public void onCollisionStay(ColliderComponent other){
+    public void MonCollisionStay(ColliderComponent other){
         parent.onCollisionStay(other.getParent());
+        onCollisionStay(other);
         if(stateChanged()){
             onCollisionEnter(other);
         }
+    }
+
+    public void onCollisionStay(ColliderComponent other){
+
     }
 
     public void onCollisionEnter(ColliderComponent other){

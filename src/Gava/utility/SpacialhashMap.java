@@ -5,24 +5,25 @@ import Gava.DefaultComponent.ColliderComponent;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 
 public class SpacialhashMap extends CollisionSystem{
 
-    HashMap<Integer, ArrayList<ColliderComponent>> map;
-    HashMap<String,Boolean> alreadyCollided;
 
-    HashMap<ColliderComponent,ArrayList<Integer>> CellMap;
+    ConcurrentHashMap<Integer, ArrayList<ColliderComponent>> map = new ConcurrentHashMap<>();
+    ConcurrentHashMap<String,Boolean> alreadyCollided = new ConcurrentHashMap<>();
+    ConcurrentHashMap<ColliderComponent,ArrayList<Integer>> CellMap = new ConcurrentHashMap<>();
     int colls = 0;
+    private final ForkJoinPool customThreadPool = new ForkJoinPool(4);
+
 
     int cellSize;
     //only with cell size
     public SpacialhashMap(int cellSize){
         this.cellSize = cellSize;
-        map = new HashMap<>();
-        alreadyCollided = new HashMap<>();
-        CellMap = new HashMap<>();
     }
 
     public int getCollsCount(){
@@ -145,14 +146,18 @@ public class SpacialhashMap extends CollisionSystem{
 
     public void update(){
         colls = 0;
-        for (ArrayList<ColliderComponent> list: map.values()) {
-            for (ColliderComponent go: list) {
-                CheckCollisions(go);
-            }
-        }
+
+        // Convert your map values to a parallel stream and process
+        ForkJoinTask<?> t =  customThreadPool.submit(() ->
+                map.values().parallelStream().forEach(list ->
+                        list.forEach(this::CheckCollisions)
+                )
+        );
+        t.join();
+
+
         CellMap.clear();
         alreadyCollided.clear();
-
     }
 
     public void draw(Graphics g){

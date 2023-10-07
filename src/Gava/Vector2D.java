@@ -17,6 +17,15 @@ public class Vector2D {
     public Vector2D subtract(Vector2D other){
         return new Vector2D(this.x - other.x, this.y - other.y);
     }
+
+    public Vector2D multiply(Vector2D other){
+        return new Vector2D(this.x * other.x, this.y * other.y);
+    }
+
+    public Vector2D divide(Vector2D other){
+        return new Vector2D(this.x / other.x, this.y / other.y);
+    }
+
     public Vector2D scale(double rate){
         return new Vector2D(this.x * rate, this.y * rate);
     }

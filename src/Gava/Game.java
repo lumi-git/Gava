@@ -236,6 +236,8 @@ public class Game extends JPanel implements Runnable{
             Instantiate(new CollisionsDisplay());
     }
 
+
+
     public void run() {
         double drawInterval = (double) 1000000000 /FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
@@ -269,6 +271,7 @@ public class Game extends JPanel implements Runnable{
         }
 
     }
+
 
     @Override
     public void paintComponent(Graphics g) {

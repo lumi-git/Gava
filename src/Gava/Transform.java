@@ -85,6 +85,28 @@ public class Transform {
 
     }
 
+    public Vector2D getFaceBasedOnDirection(Vector2D dir){
+        if(dir.x >0){
+            return this.getTopRight();
+        }
+        if(dir.x < 0){
+            return this.getTopLeft();
+        }
+        if(dir.y > 0){
+            return this.getBottomLeft();
+        }
+        if(dir.y < 0){
+            return this.getTopLeft();
+        }
+        return this.getCenter();
+    }
+
+    public Vector2D OffsetCloseToEdge(Transform transform){
+
+        Vector2D closestPoint = this.getFaceBasedOnDirection(transform.getPosition().subtract(this.getPosition()));
+        return closestPoint.subtract(transform.getPosition());
+    }
+
 
     @Override
     public String toString() {
