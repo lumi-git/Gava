@@ -59,6 +59,7 @@ public abstract class Scene {
             }
             gameObjectsTOSTART.clear();
         }
+        Game.getInstance().getCollisionSystem().clear();
 
         this.update(dt);
         Iterator<GameObject> it = gameObjects.iterator();
@@ -70,11 +71,17 @@ public abstract class Scene {
             }
             else go.Mupdate(dt);
         }
+        Game.getInstance().getCollisionSystem().update();
+
+
+
 
     }
 
     public void Mdraw(Graphics g){
-
+        if(Debug.getDebugOpt("collisionLayer")){
+            Game.getInstance().getCollisionSystem().draw(g);
+        }
 
         if (!drawableComponentsTOADD.isEmpty()){
             Iterator<DrawableComponent> it = drawableComponentsTOADD.iterator();
@@ -101,6 +108,7 @@ public abstract class Scene {
                 else dc.Mdraw(g);
             }
         }
+
         //if (Game.getInstance().getLightmap() != null){
         //
         //    Game.getInstance().getLightmap().clear();

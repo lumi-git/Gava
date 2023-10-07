@@ -6,6 +6,9 @@ import java.util.Iterator;
 public abstract class GameObject {
 
     private boolean isDestroyed = false;
+
+    private boolean childDependOnParent = true;
+
     private final Transform transform = new Transform();
     private Transform globalTransform = new Transform();
     protected final ArrayList<Component> components = new ArrayList<Component>();
@@ -20,18 +23,41 @@ public abstract class GameObject {
 
     private ArrayList<GameObject> childrenTOADD = new ArrayList<GameObject>();
 
-    private final String name;
+    private String Uid = initName();
+    private String name = "GameObject: " + Uid;
+
+    private boolean isStaticOnScreen = false;
+
 
     public GameObject(String name){
         this.name = name;
     }
 
     public GameObject(){
-        this.name = "Gava.GameObject";
+    }
+
+    public void setStaticOnScreen(boolean state){
+        this.isStaticOnScreen = state;
+    }
+
+    public boolean isStaticOnScreen(){
+        return this.isStaticOnScreen;
+    }
+
+    public GameObject(boolean childDependOnParent){
+        this.childDependOnParent = childDependOnParent;
+    }
+
+    private String initName(){
+        return Math.round(Math.random()*1000000000) + "_GameObject";
     }
 
     public String getName(){
         return this.name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     public void addChild(GameObject child){
@@ -39,6 +65,10 @@ public abstract class GameObject {
         childrenTOADD.add(child);
     }
 
+
+    public void setChildDependOnParent(boolean state){
+        this.childDependOnParent = state;
+    }
 
     public void Mstart() {
         this.start();
@@ -48,7 +78,7 @@ public abstract class GameObject {
     }
 
     public Transform getReadonlyTransform(){
-        if (parent != null){
+        if (parent != null && childDependOnParent){
 
             return parent.getReadonlyTransform().Combine(transform);
         }
@@ -79,7 +109,6 @@ public abstract class GameObject {
             drawableComponents.addAll(drawableComponentsTOADD);
             drawableComponentsTOADD.clear();
         }
-
 
         this.update(dt);
 
@@ -165,4 +194,23 @@ public abstract class GameObject {
     public void end(){
 
     }
+
+    public GameObject getChild(int id){
+        return this.children.get(id);
+    }
+
+
+    public  void onCollisionStay(GameObject other){
+
+    }
+
+    public void onCollisionExit(GameObject other){
+
+    }
+
+    public void onCollisionEnter(GameObject other){
+
+    }
+
+
 }

@@ -1,9 +1,11 @@
 package Gava;
+import Gava.DefaultGameObjects.CollisionsDisplay;
 import Gava.DefaultGameObjects.FPSdisplay;
 import Gava.DefaultGameObjects.GameObjectsDisplay;
 import Gava.SplashScreen.SplashScreenScene;
 import Gava.utility.FpsManager;
 import Gava.utility.LightMap;
+import Gava.utility.SpacialhashMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class Game extends JPanel implements Runnable{
     Thread gameThread;
     private int DrawLayerCount = 10;
     //private LightMap Lightmap ;
-
+    private CollisionSystem spacialhashMap = new SpacialhashMap(100);
     private Camera camera = new Camera();
 
     double CurrentFps = 0;
@@ -68,6 +70,9 @@ public class Game extends JPanel implements Runnable{
         frame.setLocationRelativeTo(null);
     }
 
+    public CollisionSystem getCollisionSystem(){
+        return spacialhashMap;
+    }
 
     public void initImageLibrary(String folderpaht){
         /**
@@ -227,6 +232,8 @@ public class Game extends JPanel implements Runnable{
             Instantiate(new FPSdisplay());
         if (Debug.getDebugOpt("GameObjects"))
             Instantiate(new GameObjectsDisplay());
+        if (Debug.getDebugOpt("collisionLayer"))
+            Instantiate(new CollisionsDisplay());
     }
 
     public void run() {
@@ -253,7 +260,7 @@ public class Game extends JPanel implements Runnable{
             }
 
 
-            CurrentFps = 1000000000/(System.nanoTime()-now);
+            CurrentFps = 1000000000 / (System.nanoTime() - now);
 
             if (Debug.getDebugOpt("fps")){
                 fpsManager.addFps(CurrentFps);
@@ -263,10 +270,11 @@ public class Game extends JPanel implements Runnable{
 
     }
 
+    @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
         currentScene.Mdraw(g);
     }
+
 
     public void end(){
         if (Debug.getDebugOpt("fps")){

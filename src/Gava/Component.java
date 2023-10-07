@@ -44,4 +44,8 @@ public abstract class Component {
 
     }
 
+    public GameObject getParent(){
+        return this.parent;
+    }
+
 }

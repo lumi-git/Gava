@@ -20,7 +20,7 @@ public class Debug {
         map.put("fps",false);
         map.put("GameObjects",false);
         map.put("splashscreen",false);
-
+        map.put("collisionLayer",false);
         return map;
     }
 

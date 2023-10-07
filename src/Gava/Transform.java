@@ -7,7 +7,7 @@ public class Transform {
 
     public Transform(){
         this.position = new Vector2D();
-        this.scale = new Vector2D(1, 1);
+        this.scale = new Vector2D(0, 0);
         this.rotation = 0;
     }
     public Transform(Vector2D position, Vector2D scale, double rotation){
@@ -58,6 +58,33 @@ public class Transform {
         newTransform.setScale(transform.getScale());
         return newTransform;
     }
+
+
+    public Vector2D getBottomLeft(){
+        return new Vector2D(this.position.x, this.position.y + this.scale.y);
+    }
+    public Vector2D getBottomRight(){
+        return new Vector2D(this.position.x + this.scale.x, this.position.y + this.scale.y);
+    }
+    public Vector2D getTopLeft(){
+        return new Vector2D(this.position.x, this.position.y);
+    }
+    public Vector2D getTopRight(){
+        return new Vector2D(this.position.x + this.scale.x, this.position.y);
+    }
+    public Vector2D getCenter(){
+        return new Vector2D(this.position.x + this.scale.x / 2, this.position.y + this.scale.y / 2);
+    }
+
+    public boolean isInside(Vector2D point){
+        return point.x >= this.position.x && point.x <= this.position.x + this.scale.x && point.y >= this.position.y && point.y <= this.position.y + this.scale.y;
+    }
+
+    public boolean Intersect(Transform transform){
+        return this.isInside(transform.getBottomLeft()) || this.isInside(transform.getBottomRight()) || this.isInside(transform.getTopLeft()) || this.isInside(transform.getTopRight()) || transform.isInside(this.getBottomLeft()) || transform.isInside(this.getBottomRight()) || transform.isInside(this.getTopLeft()) || transform.isInside(this.getTopRight());
+
+    }
+
 
     @Override
     public String toString() {

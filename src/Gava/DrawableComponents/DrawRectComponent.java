@@ -26,11 +26,11 @@ public class DrawRectComponent extends ColorComponent {
         g.setColor(color);
         Graphics2D g2d = (Graphics2D) g;
         if (parent.getReadonlyTransform().getRotation() != 0) {
-            g2d.fill(RotateRect.rotate(new Rectangle((int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
-                    (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y), (int) parent.getReadonlyTransform().getScale().x, (int) parent.getReadonlyTransform().getScale().y), parent.getReadonlyTransform().getRotation()));
+            g2d.fill(RotateRect.rotate(new Rectangle((int)GetDrawingTransform().getPosition().x,
+                    (int) GetDrawingTransform().getPosition().y, (int) GetDrawingTransform().getScale().x, (int) GetDrawingTransform().getScale().y), GetDrawingTransform().getRotation()));
         }else{
-            g2d.fillRect((int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
-                    (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y), (int) parent.getReadonlyTransform().getScale().x, (int) parent.getReadonlyTransform().getScale().y);
+            g2d.fillRect((int) GetDrawingTransform().getPosition().x,
+                    (int) GetDrawingTransform().getPosition().y, (int) GetDrawingTransform().getScale().x, (int) GetDrawingTransform().getScale().y);
         }
     }
 

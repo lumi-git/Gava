@@ -35,8 +35,8 @@ public class DrawTextComponent extends ColorComponent{
 
         g2d.setFont(font);
 
-        g2d.drawString(text,(int)( parent.getReadonlyTransform().getPosition().x - camera.getPosition().x),
-                (int) (parent.getReadonlyTransform().getPosition().y - camera.getPosition().y));
+        g2d.drawString(text,(int)GetDrawingTransform().getPosition().x,
+                (int) GetDrawingTransform().getPosition().y);
     }
 
     public void setText(String text){

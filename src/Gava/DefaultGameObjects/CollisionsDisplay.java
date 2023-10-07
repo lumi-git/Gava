@@ -8,8 +8,7 @@ import Gava.Vector2D;
 
 import java.awt.*;
 
-public class FPSdisplay extends GameObject {
-
+public class CollisionsDisplay extends GameObject {
     @Override
     public void start() {
         setStaticOnScreen(true);
@@ -18,12 +17,12 @@ public class FPSdisplay extends GameObject {
         this.addDrawableComponent(dc);
 
         this.getModificationTransform().setScale(new Vector2D(100,10));
-        this.getModificationTransform().setPosition(new Vector2D(10,20));
+        this.getModificationTransform().setPosition(new Vector2D(10,80));
 
     }
 
     @Override
     public void update(double dt) {
-        getDrawableComponent(DrawTextComponent.class).setText("FPS: "+ Math.round(Game.getInstance().getFpsManager().getFps()));
+        getDrawableComponent(DrawTextComponent.class).setText("with spacial hash: "+ Game.getInstance().getCollisionSystem().getCollsCount());
     }
 }

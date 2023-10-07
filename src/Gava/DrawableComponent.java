@@ -23,4 +23,15 @@ public abstract class DrawableComponent extends Component {
     public void update(double dt) {
 
     }
+
+    public Transform GetDrawingTransform(){
+        if(parent.isStaticOnScreen()){
+            return parent.getReadonlyTransform();
+        }
+        else{
+            return new Transform(parent.getReadonlyTransform().getPosition().subtract(Game.getInstance().getCamera().getPosition()),parent.getReadonlyTransform().getScale(),parent.getReadonlyTransform().getRotation());
+        }
+
+    }
+
 }
