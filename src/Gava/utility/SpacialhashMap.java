@@ -5,6 +5,7 @@ import Gava.DefaultComponent.ColliderComponent;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
@@ -38,22 +39,11 @@ public class SpacialhashMap extends CollisionSystem{
         return count;
     }
 
-    public void insert(ColliderComponent go){
-
+    public void insert(ColliderComponent go) {
         ArrayList<Integer> cells = getCells(go);
-        for ( int cell :cells){
-            if(map.containsKey(cell)){
-                if(map.get(cell).contains(go)){
-                    continue;
-                }
-                map.get(cell).add(go);
-            }else{
-                ArrayList<ColliderComponent> list = new ArrayList<ColliderComponent>();
-                list.add(go);
-                map.put(cell,list);
-            }
+        for (int cell : cells) {
+            map.computeIfAbsent(cell, k -> new ArrayList<>()).add(go);
         }
-
     }
 
     public void remove(ColliderComponent go){
@@ -70,31 +60,29 @@ public class SpacialhashMap extends CollisionSystem{
          map.clear();
     }
 
-    public ArrayList<Integer> getCells(ColliderComponent go){
-        if( CellMap.containsKey(go)){
+    public ArrayList<Integer> getCells(ColliderComponent go) {
+        if (CellMap.containsKey(go)) {
             return CellMap.get(go);
         }
         Transform transform = go.getParent().getReadonlyTransform();
-        int x = (int) (transform.getPosition().x/cellSize);
-        int y = (int) (transform.getPosition().y/cellSize);
-        int x2 = (int) ((transform.getPosition().x + transform.getScale().x)/cellSize);
-        int y2 = (int) ((transform.getPosition().y + transform.getScale().y)/cellSize);
-        ArrayList<Integer> cells = new ArrayList<Integer>();
+        int x = (int) (transform.getPosition().x / cellSize);
+        int y = (int) (transform.getPosition().y / cellSize);
+        int x2 = (int) ((transform.getPosition().x + transform.getScale().x) / cellSize);
+        int y2 = (int) ((transform.getPosition().y + transform.getScale().y) / cellSize);
+
+        Set<Integer> cellSet = new HashSet<>();
         for (int i = x; i <= x2; i++) {
             for (int j = y; j <= y2; j++) {
-                if (cells.contains(getCellHash(i,j))){
-                    continue;
-                }
-                cells.add(getCellHash(i,j));
+                cellSet.add(getCellHash(i, j));
             }
         }
-        CellMap.put(go,cells);
+        ArrayList<Integer> cells = new ArrayList<>(cellSet);
+        CellMap.put(go, cells);
         return cells;
-
     }
 
     public int getCellHash(int x, int y){
-        return x +( y * Game.getInstance().getScreenWidth());
+        return x*31393 +( y * 6353);
     }
 
     public Set<ColliderComponent> query(ColliderComponent go){
@@ -136,12 +124,18 @@ public class SpacialhashMap extends CollisionSystem{
     }
 
     public void addCollisionHash(ColliderComponent go1, ColliderComponent go2){
-        alreadyCollided.put(go1.getParent().getName() + go2.getParent().getName(),true);
+        alreadyCollided.put(getKeyForPair(go1,go2),true);
         alreadyCollided.put(go2.getParent().getName() + go1.getParent().getName(),true);
     }
 
     public boolean checkCollisionHash(ColliderComponent go1, ColliderComponent go2){
-        return alreadyCollided.containsKey(go1.getParent().getName() + go2.getParent().getName()) || alreadyCollided.containsKey(go2.getParent().getName() + go1.getParent().getName());
+        return alreadyCollided.containsKey(getKeyForPair(go1,go2));
+    }
+
+    String getKeyForPair(ColliderComponent go1, ColliderComponent go2) {
+        return go1.getParent().getName().compareTo(go2.getParent().getName()) < 0 ?
+                go1.getParent().getName() + go2.getParent().getName() :
+                go2.getParent().getName() + go1.getParent().getName();
     }
 
     public void update(){

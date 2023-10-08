@@ -1,14 +1,11 @@
 package Gava.DefaultComponent;
-import Gava.Debug;
-import Gava.GameObject;
-import Gava.Transform;
-import Gava.Vector2D;
+import Gava.*;
 
 public class RigidBody extends ColliderComponent {
 
     double mass = 1;
 
-    Vector2D friction = new Vector2D(0.2,0.2);
+    Vector2D friction = new Vector2D(0.9,0.9);
 
     Vector2D speed = new Vector2D();
     Vector2D force = new Vector2D();
@@ -21,15 +18,17 @@ public class RigidBody extends ColliderComponent {
 
     @Override
     public void update(double dt) {
-        super.update(dt);
 
         updateBody(dt);
+
     }
 
     public void updateBody(double dt){
+        Game.getInstance().getCollisionSystem().insert(this);
         speed = speed.add(force.scale(dt));
-        parent.getModificationTransform().setPosition(parent.getModificationTransform().getPosition().add(speed.scale(dt)));
-        speed = speed.subtract(speed.multiply(friction.scale(dt)));
+        parent.getModificationTransform().setPosition(parent.getModificationTransform().getPosition().add(speed));
+        speed = speed.multiply(friction);
+
         force = new Vector2D();
     }
 
@@ -41,9 +40,5 @@ public class RigidBody extends ColliderComponent {
     @Override
     public void onCollisionStay(ColliderComponent other) {
         RigidBody otherRigidBody = (RigidBody) other.getParent().getComponent(RigidBody.class);
-        if( otherRigidBody != null){
-
-
-        }
     }
 }

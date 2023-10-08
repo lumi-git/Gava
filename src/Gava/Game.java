@@ -68,6 +68,7 @@ public class Game extends JPanel implements Runnable{
         });
         frame.add(Game.getInstance());
         frame.setLocationRelativeTo(null);
+
     }
 
     public CollisionSystem getCollisionSystem(){
@@ -247,6 +248,7 @@ public class Game extends JPanel implements Runnable{
             double remainingTime =0;
             Mupdate(nextDrawTime*0.00000000000001);
             repaint();
+
             try {
                 remainingTime = nextDrawTime - System.nanoTime();
                 remainingTime = remainingTime/1000000;
@@ -261,7 +263,6 @@ public class Game extends JPanel implements Runnable{
                 e.printStackTrace();
             }
 
-
             CurrentFps = 1000000000 / (System.nanoTime() - now);
 
             if (Debug.getDebugOpt("fps")){
@@ -274,7 +275,8 @@ public class Game extends JPanel implements Runnable{
 
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paint(Graphics g) {
+        super.paint(g);
         currentScene.Mdraw(g);
     }
 
