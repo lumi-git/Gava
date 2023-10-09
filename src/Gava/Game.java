@@ -16,7 +16,7 @@ public class Game extends JPanel implements Runnable{
     Thread gameThread;
     private int DrawLayerCount = 10;
     //private LightMap Lightmap ;
-    private CollisionSystem spacialhashMap = new SpacialhashMap(100);
+    private CollisionSystem spacialhashMap = new SpacialhashMap(50);
     private Camera camera = new Camera();
 
     double CurrentFps = 0;
