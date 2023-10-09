@@ -69,6 +69,11 @@ public class Vector2D {
         return new Vector2D(1,0);
     }
 
+    public Vector2D round(int precision){
+        double precision_ = Math.pow(10.0, precision);
+        return new Vector2D( Math.round(this.x * precision_) /precision_,  Math.round(this.y * precision_) /precision_);
+    }
+
     @Override
     public String toString() {
         return "( x: " + x + "," + "y: " + y + ")";

@@ -30,10 +30,10 @@ public class Transform {
         return this.rotation;
     }
     public void setPosition(Vector2D position){
-        this.position = position;
+        this.position = position.round(4);
     }
     public void setScale(Vector2D scale){
-        this.scale = scale;
+        this.scale = scale.round(4);
     }
     public void setRotation(double rotation){
         this.rotation = rotation;

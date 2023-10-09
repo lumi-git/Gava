@@ -158,7 +158,7 @@ public class SpacialhashMap extends CollisionSystem{
         Camera camera = Game.getInstance().getCamera();
         g.setColor(Color.red);
 
-        for (int i = Game.getInstance().getScreenHeight()*2/cellSize +1;i>=0 ;i--){
+        for (int i = Game.getInstance().getScreenHeight()*2/cellSize;i>=0 ;i--){
             int y = (int)((i*cellSize- camera.getPosition().y%Game.getInstance().getScreenHeight())%Game.getInstance().getScreenHeight() );
             g.drawLine(0,y,Game.getInstance().getScreenWidth(),y);
         }

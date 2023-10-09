@@ -26,9 +26,8 @@ public class RigidBody extends ColliderComponent {
     public void updateBody(double dt){
         Game.getInstance().getCollisionSystem().insert(this);
         speed = speed.add(force.scale(dt));
-        parent.getModificationTransform().setPosition(parent.getModificationTransform().getPosition().add(speed));
         speed = speed.multiply(friction);
-
+        parent.getModificationTransform().setPosition(parent.getModificationTransform().getPosition().add(speed));
         force = new Vector2D();
     }
 
@@ -40,5 +39,10 @@ public class RigidBody extends ColliderComponent {
     @Override
     public void onCollisionStay(ColliderComponent other) {
         RigidBody otherRigidBody = (RigidBody) other.getParent().getComponent(RigidBody.class);
+        Vector2D difference = this.parent.getModificationTransform().getPosition().subtract(other.getParent().getModificationTransform().getPosition());
+        if(otherRigidBody != null){
+           addForce(difference.scale(0.1));
+
+        }
     }
 }
