@@ -11,32 +11,63 @@ public class Vector2D {
     }
     public double x;
     public double y;
+    public void m_add(Vector2D other){
+        this.x += other.x;
+        this.y += other.y;
+    }
+
     public Vector2D add(Vector2D other){
         return new Vector2D(this.x + other.x, this.y + other.y);
     }
+
+
+
+    public void m_subtract(Vector2D other){
+        this.x -= other.x;
+        this.y -= other.y;
+    }
+
     public Vector2D subtract(Vector2D other){
         return new Vector2D(this.x - other.x, this.y - other.y);
+    }
+
+    public void m_multiply(Vector2D other){
+        this.x *= other.x;
+        this.y *= other.y;
+
     }
 
     public Vector2D multiply(Vector2D other){
         return new Vector2D(this.x * other.x, this.y * other.y);
     }
 
+    public void m_divide(Vector2D other){
+        this.x /= other.x;
+        this.y /= other.y;
+
+    }
+
     public Vector2D divide(Vector2D other){
         return new Vector2D(this.x / other.x, this.y / other.y);
+    }
+
+    public void m_scale(double rate){
+        this.x *= rate;
+        this.y *= rate;
     }
 
     public Vector2D scale(double rate){
         return new Vector2D(this.x * rate, this.y * rate);
     }
+
     public double getLength(){
         return Math.sqrt(x*x + y*y);
     }
-    public Vector2D normalize(){
+    public Vector2D normalized(){
         double length = getLength();
         return new Vector2D(this.x / length, this.y / length);
     }
-    public Vector2D rotate(double angle){
+    public Vector2D rotated(double angle){
         double rad = Math.toRadians(angle);
         double cos = Math.cos(rad);
         double sin = Math.sin(rad);
