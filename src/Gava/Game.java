@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 public class Game extends JPanel implements Runnable{
     Thread gameThread;
+    int FrameCount = 0;
     private int DrawLayerCount = 10;
     //private LightMap Lightmap ;
     private CollisionSystem spacialhashMap = new SpacialhashMap(50);
@@ -182,6 +183,10 @@ public class Game extends JPanel implements Runnable{
         scenes.add(scene);
     }
 
+    public int getFrameCount(){
+        return FrameCount;
+    }
+
     public void startMainScene(){
         setCurrentScene(mainScene);
     }
@@ -251,6 +256,7 @@ public class Game extends JPanel implements Runnable{
             if(delta >= 1){
                 Mupdate(delta);
                 repaint();
+                FrameCount++;
                 delta--;
             }
             if (Debug.getDebugOpt("fps")){

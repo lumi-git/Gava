@@ -56,6 +56,10 @@ public class Vector2D {
         this.y *= rate;
     }
 
+    public double dot(Vector2D other){
+        return this.x * other.x + this.y * other.y;
+    }
+
     public Vector2D scale(double rate){
         return new Vector2D(this.x * rate, this.y * rate);
     }
@@ -104,6 +108,9 @@ public class Vector2D {
         double precision_ = Math.pow(10.0, precision);
         return new Vector2D( Math.round(this.x * precision_) /precision_,  Math.round(this.y * precision_) /precision_);
     }
+
+
+
 
     @Override
     public String toString() {

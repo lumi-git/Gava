@@ -109,15 +109,16 @@ public class SpacialhashMap extends CollisionSystem{
             }
 
             addCollisionHash(go,g);
-
-            if(checkAABBCollision(go,g)){
-
+            CollisionInformation info = checkAABBCollision(go,g);
+            if( info != null){
+                info.setOther(g.getParent());
                 go.CollisionPreUpdate();
-                go.onCollision(g);
+                go.onCollision(g,info);
                 go.CollisionPostUpdate();
 
+                info.setOther(go.getParent());
                 g.CollisionPreUpdate();
-                g.onCollision(go);
+                g.onCollision(go,info);
                 g.CollisionPostUpdate();
             }
         }
@@ -125,7 +126,6 @@ public class SpacialhashMap extends CollisionSystem{
 
     public void addCollisionHash(ColliderComponent go1, ColliderComponent go2){
         alreadyCollided.put(getKeyForPair(go1,go2),true);
-        alreadyCollided.put(go2.getParent().getName() + go1.getParent().getName(),true);
     }
 
     public boolean checkCollisionHash(ColliderComponent go1, ColliderComponent go2){
@@ -140,6 +140,7 @@ public class SpacialhashMap extends CollisionSystem{
 
     public void update(){
         colls = 0;
+
 
         // Convert your map values to a parallel stream and process
         ForkJoinTask<?> t =  customThreadPool.submit(() ->
@@ -169,9 +170,39 @@ public class SpacialhashMap extends CollisionSystem{
         }
     }
 
-    public boolean checkAABBCollision(ColliderComponent a, ColliderComponent b) {
-        // Assuming ColliderComponent has methods to get the top, bottom, left, and right edges.
-        return a.getParent().getReadonlyTransform().Intersect(b.getParent().getReadonlyTransform());
+    public CollisionInformation checkAABBCollision(ColliderComponent a, ColliderComponent b) {
+        Transform aTransform = a.getParent().getReadonlyTransform();
+        Transform bTransform = b.getParent().getReadonlyTransform();
+
+        if (!aTransform.Intersect(bTransform)) {
+            return null;
+        }
+
+        Vector2D delta = bTransform.getCenter().subtract(aTransform.getCenter());
+        Vector2D normal;
+
+        float xOverlap = (float) (aTransform.getScale().x/2 + bTransform.getScale().x/2 - Math.abs(delta.x));
+        float yOverlap = (float) (aTransform.getScale().y/2 + bTransform.getScale().y/2 - Math.abs(delta.y));
+
+        // If xOverlap is less, then collision is on the X axis, otherwise on the Y axis
+        if (xOverlap < yOverlap) {
+            if (delta.x < 0) {
+                normal = new Vector2D(-1, 0);
+            } else {
+                normal = new Vector2D(1, 0);
+            }
+        } else {
+            if (delta.y < 0) {
+                normal = new Vector2D(0, -1);
+            } else {
+                normal = new Vector2D(0, 1);
+            }
+        }
+
+        float collisionDepth = Math.min(xOverlap, yOverlap);
+
+        // Return collision information
+        return new CollisionInformation(normal, collisionDepth);
     }
 
 

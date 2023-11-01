@@ -1,9 +1,7 @@
 package Gava.DefaultComponent;
 
-import Gava.Component;
-import Gava.Debug;
-import Gava.Game;
-import Gava.GameObject;
+import Gava.*;
+import Gava.utility.CollisionResolver;
 
 public abstract class ColliderComponent  extends Component {
 
@@ -17,11 +15,15 @@ public abstract class ColliderComponent  extends Component {
         super(parent);
     }
 
-    public void onCollision(ColliderComponent other){
-        //Debug.log("START FOR NEW Collision for object " + parent.getName() + " with " + other.getParent().getName() + "");
+    public void onCollision(ColliderComponent other, CollisionInformation collisionInformation){
+
         this.other = other;
         isColliding = true;
-        MonCollisionStay(other);
+        if (other.getParent().getName().hashCode() > parent.getName().hashCode()){
+            CollisionResolver.resolve(this, other);
+            Debug.log("START FOR NEW Collision for object " + parent.getName() + " with " + other.getParent().getName() + "");
+        }
+        MonCollisionStay(collisionInformation);
     }
 
     private boolean stateChanged(){
@@ -38,24 +40,25 @@ public abstract class ColliderComponent  extends Component {
     }
 
 
-    public void onCollisionExit(ColliderComponent other){
-        parent.onCollisionExit(other.getParent());
+    public void onCollisionExit(CollisionInformation collisionInformation){
+        parent.onCollisionExit(collisionInformation);
     }
 
-    public void MonCollisionStay(ColliderComponent other){
-        parent.onCollisionStay(other.getParent());
-        onCollisionStay(other);
+    public void MonCollisionStay(CollisionInformation collisionInformation){
+        parent.onCollisionStay(collisionInformation);
+        onCollisionStay(collisionInformation);
         if(stateChanged()){
-            onCollisionEnter(other);
+            onCollisionEnter(collisionInformation);
         }
     }
 
-    public void onCollisionStay(ColliderComponent other){
+    public void onCollisionStay(CollisionInformation collisionInformation){
+
 
     }
 
-    public void onCollisionEnter(ColliderComponent other){
-        parent.onCollisionEnter(other.getParent());
+    public void onCollisionEnter(CollisionInformation collisionInformation){
+        parent.onCollisionEnter(collisionInformation);
     }
 
     @Override

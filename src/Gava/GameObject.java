@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public abstract class GameObject {
-
+    private boolean started = false;
     private boolean isDestroyed = false;
 
     private boolean childDependOnParent = true;
@@ -36,6 +36,10 @@ public abstract class GameObject {
     public GameObject(){
     }
 
+    public boolean isStarted(){
+        return this.started;
+    }
+
     public void setStaticOnScreen(boolean state){
         this.isStaticOnScreen = state;
     }
@@ -62,7 +66,10 @@ public abstract class GameObject {
 
     public void addChild(GameObject child){
         child.parent = this;
-        childrenTOADD.add(child);
+        if(started)
+            this.childrenTOADD.add(child);
+        else
+            this.children.add(child);
     }
 
 
@@ -72,6 +79,7 @@ public abstract class GameObject {
 
     public void Mstart() {
         this.start();
+        started = true;
     }
     public Transform getModificationTransform(){
         return this.transform;
@@ -129,7 +137,10 @@ public abstract class GameObject {
         return this.isDestroyed;
     }
     public void addComponent(Component component){
-        this.componentsTOADD.add(component);
+        if(started)
+            this.componentsTOADD.add(component);
+        else
+            this.components.add(component);
         component.Mstart();
     }
 
@@ -168,7 +179,10 @@ public abstract class GameObject {
         }
     }
     public void addDrawableComponent(DrawableComponent dc){
-        drawableComponentsTOADD.add(dc);
+        if(started)
+            this.drawableComponentsTOADD.add(dc);
+        else
+            this.drawableComponents.add(dc);
         Game.getInstance().getCurrentScene().addDrawableComponent(dc);
     }
 
@@ -200,15 +214,15 @@ public abstract class GameObject {
     }
 
 
-    public  void onCollisionStay(GameObject other){
+    public  void onCollisionStay(CollisionInformation collisionInformation){
 
     }
 
-    public void onCollisionExit(GameObject other){
+    public void onCollisionExit(CollisionInformation collisionInformation){
 
     }
 
-    public void onCollisionEnter(GameObject other){
+    public void onCollisionEnter(CollisionInformation collisionInformation){
 
     }
 

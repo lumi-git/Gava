@@ -11,7 +11,7 @@ public class PlayerBody extends Component {
     RigidBody rb;
     public PlayerBody(GameObject parent, double speed) {
         super(parent);
-        rb = new RigidBody(parent);
+        rb = new RigidBody(parent,10,0.5,false);
         parent.addComponent(rb);
         this.speed = speed;
     }
@@ -20,16 +20,16 @@ public class PlayerBody extends Component {
     public void update(double dt){
 
         if(Input.isKeyPressed(KeyEvent.VK_Z)){
-            rb.addForce(new Gava.Vector2D(0,-speed));
+            rb.applyForce(new Gava.Vector2D(0,-speed));
         }
         if(Input.isKeyPressed(KeyEvent.VK_S)){
-            rb.addForce(new Gava.Vector2D(0,speed));
+            rb.applyForce(new Gava.Vector2D(0,speed));
         }
         if(Input.isKeyPressed(KeyEvent.VK_Q)){
-            rb.addForce(new Gava.Vector2D(-speed,0));
+            rb.applyForce(new Gava.Vector2D(-speed,0));
         }
         if(Input.isKeyPressed(KeyEvent.VK_D)){
-            rb.addForce(new Gava.Vector2D(speed,0));
+            rb.applyForce(new Gava.Vector2D(speed,0));
         }
     }
 }
