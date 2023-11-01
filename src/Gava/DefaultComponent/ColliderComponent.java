@@ -21,7 +21,6 @@ public abstract class ColliderComponent  extends Component {
         isColliding = true;
         if (other.getParent().getName().hashCode() > parent.getName().hashCode()){
             CollisionResolver.resolve(this, other);
-            Debug.log("START FOR NEW Collision for object " + parent.getName() + " with " + other.getParent().getName() + "");
         }
         MonCollisionStay(collisionInformation);
     }
