@@ -1,4 +1,5 @@
 import Gava.*;
+import Gava.DefaultComponent.CollideBoxComponent;
 import Gava.DrawableComponents.DrawRectComponent;
 import Gava.DrawableComponents.DrawSpriteComponent;
 
@@ -15,6 +16,7 @@ public class defaultCube extends GameObject {
 
     @Override
     public void start() {
+        this.addComponent(new CollideBoxComponent(this));
         this.addDrawableComponent(new DrawRectComponent(Color.red,this));
         this.addDrawableComponent(new DrawSpriteComponent("Logo.png",this));
         this.getModificationTransform().setScale(new Vector2D(100,100));
@@ -50,6 +52,12 @@ public class defaultCube extends GameObject {
             destroy();
         }
 
+    }
+
+    @Override
+    public void onCollisionEnter(CollisionInformation collisionInformation) {
+        System.out.println("collision");
+        this.destroy();
     }
 
     @Override

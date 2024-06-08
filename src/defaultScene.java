@@ -9,8 +9,8 @@ public class defaultScene extends Scene {
     @Override
     public void start() {
         Debug.log("main scene");
-        int rows = 0;
-        int cols = 0;
+        int rows = 10;
+        int cols = 10;
         int spaces = 2;
         int offsetx = Game.getInstance().getWidth() / 3;
         int offsety = Game.getInstance().getHeight() / 3;
@@ -21,9 +21,6 @@ public class defaultScene extends Scene {
                 Game.Instantiate(new defaultCube(pos));
             }
         }
-        EmbededAwtGameObject eb = new EmbededAwtGameObject(new TextArea("zss"));
-        eb.getModificationTransform().setPosition(new Vector2D(100,100));
-        Game.Instantiate(eb);
 
     }
 
